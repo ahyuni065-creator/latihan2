@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kesehatan Mental</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Kesehatan Mental</h1>
+    <nav>
+      <ul>
+        <li><a href="#pencegahan">Pencegahan</a></li>
+        <li><a href="#tanda">Tanda-tanda</a></li>
+        <li><a href="#mengatasi">Mengatasi</a></li>
+        <li><a href="#angket">Tes Mental</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="pencegahan">
+    <h2>Cara Pencegahan Gangguan Mental</h2>
+    <ul>
+      <li>Menjaga keseimbangan antara pekerjaan dan istirahat.</li>
+      <li>Berolahraga secara teratur.</li>
+      <li>Menjaga pola makan sehat dan tidur cukup.</li>
+      <li>Berbicara dengan orang yang dipercaya saat menghadapi stres.</li>
+      <li>Hindari konsumsi alkohol dan narkoba.</li>
+    </ul>
+  </section>
+
+  <section id="tanda">
+    <h2>Tanda-tanda Gangguan Mental</h2>
+    <ul>
+      <li>Merasa sedih atau cemas berkepanjangan.</li>
+      <li>Kehilangan minat terhadap aktivitas yang disukai.</li>
+      <li>Perubahan nafsu makan atau pola tidur.</li>
+      <li>Sulit berkonsentrasi.</li>
+      <li>Menarik diri dari lingkungan sosial.</li>
+    </ul>
+  </section>
+
+  <section id="mengatasi">
+    <h2>Cara Mengatasi Gangguan Mental</h2>
+    <ul>
+      <li>Konsultasi dengan psikolog atau psikiater.</li>
+      <li>Terapi perilaku kognitif atau konseling.</li>
+      <li>Menulis jurnal atau meditasi.</li>
+      <li>Meningkatkan dukungan sosial.</li>
+      <li>Berpartisipasi dalam kegiatan positif.</li>
+    </ul>
+  </section>
+
+  <section id="angket">
+    <h2>Tes Kesehatan Mental</h2>
+    <p>Jawab pertanyaan berikut dengan jujur (1 = Tidak Pernah, 5 = Sangat Sering):</p>
+    <form id="mentalForm">
+      <div class="question">
+        <label>1. Saya merasa stres berlebihan.</label><br>
+        <input type="number" min="1" max="5" required>
+      </div>
+      <div class="question">
+        <label>2. Saya merasa sulit tidur atau gelisah.</label><br>
+        <input type="number" min="1" max="5" required>
+      </div>
+      <div class="question">
+        <label>3. Saya merasa kurang bersemangat melakukan hal-hal biasa.</label><br>
+        <input type="number" min="1" max="5" required>
+      </div>
+      <div class="question">
+        <label>4. Saya sering merasa tidak berharga.</label><br>
+        <input type="number" min="1" max="5" required>
+      </div>
+      <div class="question">
+        <label>5. Saya merasa tidak bisa mengendalikan emosi.</label><br>
+        <input type="number" min="1" max="5" required>
+      </div>
+
+      <button type="submit">Lihat Hasil</button>
+    </form>
+
+    <div id="hasil" class="hidden">
+      <h3>Hasil Tes:</h3>
+      <p id="persentase"></p>
+      <p id="interpretasi"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️ oleh ChatGPT</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('mentalForm');
+    const hasilDiv = document.getElementById('hasil');
+    const persentaseText = document.getElementById('persentase');
+    const interpretasiText = document.getElementById('interpretasi');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputs = form.querySelectorAll('input[type="number"]');
+      let total = 0;
+      inputs.forEach(input => total += parseInt(input.value));
+      const skorMaks = inputs.length * 5;
+      const persenSehat = Math.round(((skorMaks - total) / skorMaks) * 100);
+
+      persentaseText.textContent = `Tingkat Kesehatan Mental Anda: ${persenSehat}%`;
+
+      if (persenSehat >= 80) {
+        interpretasiText.textContent = "Kesehatan mental Anda sangat baik! Pertahankan kebiasaan positif.";
+      } else if (persenSehat >= 50) {
+        interpretasiText.textContent = "Kesehatan mental Anda cukup baik, namun perlu diperhatikan lebih lanjut.";
+      } else {
+        interpretasiText.textContent = "Anda mungkin mengalami tekanan mental yang cukup tinggi. Pertimbangkan untuk berkonsultasi dengan profesional.";
+      }
+
+      hasilDiv.classList.remove('hidden');
+      hasilDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

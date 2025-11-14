@@ -7,10 +7,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <sec
+  <header>
+    <h1>Kesehatan Mental</h1>
+    <nav>
+      <ul>
+        <li><a href="#pencegahan">Pencegahan</a></li>
+        <li><a href="#tanda">Tanda-tanda</a></li>
+        <li><a href="#mengatasi">Mengatasi</a></li>
+        <li><a href="#angket">Tes Mental</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="pencegahan">
+    <h2>Cara Pencegahan Gangguan Mental</h2>
+    <ul>
+      <li>Menjaga keseimbangan antara pekerjaan dan istirahat.</li>
+      <li>Berolahraga secara teratur.</li>
+      <li>Menjaga pola makan sehat dan tidur cukup.</li>
+      <li>Berbicara dengan orang yang dipercaya saat menghadapi stres.</li>
+      <li>Hindari konsumsi alkohol dan narkoba.</li>
+    </ul>
+  </section>
+
   <section id="tanda">
     <h2>Tanda-tanda Gangguan Mental</h2>
-   
+    <ul>
       <li>Merasa sedih atau cemas berkepanjangan.</li>
       <li>Kehilangan minat terhadap aktivitas yang disukai.</li>
       <li>Perubahan nafsu makan atau pola tidur.</li>
@@ -58,7 +80,22 @@
       <button type="submit">Lihat Hasil</button>
     </form>
 
-  
+    <div id="hasil" class="hidden">
+      <h3>Hasil Tes:</h3>
+      <p id="persentase"></p>
+      <p id="interpretasi"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️ oleh ChatGPT</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('mentalForm');
+    const hasilDiv = document.getElementById('hasil');
+    const persentaseText = document.getElementById('persentase');
+    const interpretasiText = document.getElementById('interpretasi');
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();

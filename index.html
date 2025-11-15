@@ -124,30 +124,122 @@
         gap:8px;
         align-items:center;
     }
-
-    /* QUOTES DISPLAY */
-    #quotes-section { padding: 30px 20px; border-radius:12px; background: linear-gradient(180deg,#fff8fe,#f7fbff); box-shadow: 0 6px 18px rgba(30,40,80,0.03); transition: background .4s ease; }
-    #current-quote { color:inherit; font-weight:600; font-size:1.1rem; line-height:1.5; margin-bottom:10px; }
     
-    /* Quote Author - Default to Dark Blue/Pink Gradient */
-    #quote-author {
-      background: linear-gradient(90deg, #3a5fbf 0%, #c4407b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-      font-style:italic; font-weight:500; font-size:0.95rem;
-      transition: all .4s ease;
+    /* ==============================
+       NEW CAROUSEL STYLES
+       ============================== */
+    #quotes-section {
+        padding: 0; /* No padding here, content inside will have it */
+        border-radius:12px;
+        background: none; 
+        box-shadow: none;
+        overflow: hidden; 
+        position: relative;
     }
-    
-    /* Theme chooser: DROPDOWN style */
+
+    .carousel-container {
+        position: relative;
+        max-width: 700px; /* Lebar maksimum carousel */
+        margin: 0 auto;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        overflow: hidden; 
+    }
+
+    .carousel-slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        border-radius: 15px;
+    }
+
+    .carousel-slide {
+        min-width: 100%; /* Setiap slide memenuhi lebar kontainer */
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #333; /* Warna teks default untuk slide */
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 300px; /* Tinggi gambar carousel */
+        object-fit: cover; 
+        display: block;
+        border-radius: 15px;
+    }
+
+    .carousel-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.7); /* Latar belakang transparan untuk teks */
+        padding: 20px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        font-weight: 600;
+        font-size: 1.1em;
+        line-height: 1.4;
+        color: #3a5fbf; /* Default caption color */
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+    .carousel-caption p { margin: 0; }
+
+    .carousel-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #333;
+        border-radius: 50%;
+        z-index: 10;
+        transition: background 0.3s ease;
+    }
+    .carousel-nav-btn:hover { background: rgba(255, 255, 255, 0.8); }
+    .carousel-nav-btn.prev { left: 10px; }
+    .carousel-nav-btn.next { right: 10px; }
+
+    .carousel-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    }
+    .carousel-dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .carousel-dot.active {
+        background: #ffb3d9; /* Pink dot for active slide */
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Theme chooser: DROPDOWN style - Sekarang di Nav */
     .theme-chooser {
         display: flex;
         align-items: center;
         gap: 5px;
         padding: 6px 0; /* Padding agar sejajar dengan link navigasi */
     }
-    .theme-chooser select, #quote-select {
+    .theme-chooser select {
       padding:4px 8px; /* Dikecilkan agar pas di nav */
       border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
       box-shadow: 0 3px 6px rgba(0,0,0,0.05);
@@ -171,37 +263,46 @@
     /* Pastel Pink Theme */
     body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
     header[data-theme="pink"] h1, header[data-theme="pink"] nav ul li a, header[data-theme="pink"] nav .theme-chooser label { color: #7d445c; }
-    h2[data-theme="pink"], #quote-author[data-theme="pink"] {
-        color: #c4407b; /* Darker Pink for headings/accents */
+    h2[data-theme="pink"] {
+        color: #c4407b; 
         background: none;
         -webkit-text-fill-color: initial;
         background-clip: initial;
     }
+    .carousel-caption[data-theme="pink"] { color: #7d445c; }
+    .carousel-dot[data-theme="pink"].active { background: #c4407b; }
+
 
     /* Pastel Blue Theme */
     body[data-theme="blue"] { color: #30538a; } /* Dark Blue for all text */
     header[data-theme="blue"] h1, header[data-theme="blue"] nav ul li a, header[data-theme="blue"] nav .theme-chooser label { color: #30538a; }
-    h2[data-theme="blue"], #quote-author[data-theme="blue"] {
-        color: #1a407a; /* Darker Blue for headings/accents */
+    h2[data-theme="blue"] {
+        color: #1a407a; 
         background: none;
         -webkit-text-fill-color: initial;
         background-clip: initial;
     }
+    .carousel-caption[data-theme="blue"] { color: #30538a; }
+    .carousel-dot[data-theme="blue"].active { background: #1a407a; }
+
 
     /* Pastel Purple Theme */
     body[data-theme="purple"] { color: #53308a; } /* Dark Purple for all text */
     header[data-theme="purple"] h1, header[data-theme="purple"] nav ul li a, header[data-theme="purple"] nav .theme-chooser label { color: #53308a; }
-    h2[data-theme="purple"], #quote-author[data-theme="purple"] {
-        color: #6035b3; /* Darker Purple for headings/accents */
+    h2[data-theme="purple"] {
+        color: #6035b3; 
         background: none;
         -webkit-text-fill-color: initial;
         background-clip: initial;
     }
+    .carousel-caption[data-theme="purple"] { color: #53308a; }
+    .carousel-dot[data-theme="purple"].active { background: #6035b3; }
+
 
     /* Gradient Rainbow Theme */
     body[data-theme="rainbow"] { color: #333; } /* Base color dark */
     header[data-theme="rainbow"] h1, header[data-theme="rainbow"] nav ul li a, header[data-theme="rainbow"] nav .theme-chooser label { color: #333; }
-    h2[data-theme="rainbow"], #quote-author[data-theme="rainbow"] {
+    h2[data-theme="rainbow"] {
         /* Dark Rainbow Gradient for headings/accents */
         background: linear-gradient(90deg, #b3579b, #3a5fbf, #53308a);
         -webkit-background-clip: text;
@@ -210,6 +311,9 @@
         text-fill-color: transparent;
         color: initial;
     }
+    .carousel-caption[data-theme="rainbow"] { color: #333; }
+    .carousel-dot[data-theme="rainbow"].active { background: linear-gradient(90deg, #b3579b, #3a5fbf); }
+
 
     /* Override button styling for themes */
     button[data-theme="pink"], .btn[data-theme="pink"] { background: #ffb3d9; color: #333; }
@@ -386,16 +490,44 @@
   </section>
 
   <section id="quotes" style="max-width:980px;margin:30px auto;">
-    <h2 id="h2-quotes">Quotes Motivasi</h2>
+    <h2 id="h2-quotes">Motivasi Visual Aesthetic</h2>
     <div id="quotes-section">
-      <div class="quote-display">
-        <div style="margin-bottom:15px;">
-            <label for="quote-select" style="font-size:0.9rem; color:inherit; display:block; margin-bottom:5px;">Pilih Kutipan:</label>
-            <select id="quote-select" style="min-width:250px;">
-                </select>
+      <div class="carousel-container">
+        <div class="carousel-slides">
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1518066000714-cdcd82531732?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cloud pastel">
+                <div class="carousel-caption">
+                    <p>Setiap awan gelap pasti berlalu.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1542401886-65d6c61d56e8?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hati pastel">
+                <div class="carousel-caption">
+                    <p>Cintai dirimu, selalu.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1533167732292-3c1a32997184?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bunga lembut pastel">
+                <div class="carousel-caption">
+                    <p>Tumbuhlah, seperti bunga yang mekar.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1528459463991-8c4187019803?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sunset pastel">
+                <div class="carousel-caption">
+                    <p>Indahnya dirimu, sama seperti senja.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1517833503254-0f3b0e3e5c9f?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Dreamy pastel gradient">
+                <div class="carousel-caption">
+                    <p>Mimpi adalah nyata, percayalah.</p>
+                </div>
+            </div>
         </div>
-        <p id="current-quote">\"Setiap langkah kecil adalah kemajuan — beri dirimu waktu.\"</p>
-        <p id="quote-author">~ Anonim</p>
+        <button class="carousel-nav-btn prev">❮</button>
+        <button class="carousel-nav-btn next">❯</button>
+        <div class="carousel-dots"></div>
       </div>
     </div>
   </section>
@@ -463,19 +595,6 @@
         "Saya menikmati kegiatan yang menenangkan."
       ]
     };
-
-    const quoteList = [
-        { text: "Setiap langkah kecil adalah kemajuan — beri dirimu waktu.", author: "Anonim" },
-        { text: "Kebaikan pada diri sendiri bukanlah egois, itu bertahan hidup.", author: "Audre Lorde" },
-        { text: "Berbicara tentang perasaan adalah keberanian, bukan kelemahan.", author: "Brené Brown" },
-        { text: "Saat kamu merawat dirimu, kamu memberi izin untuk sembuh.", author: "Tara Brach" },
-        { text: "Jalani hidup seolah-olah semua pendapatmu adalah yang terpenting.", author: "Ralph Waldo Emerson" },
-        { text: "Jangan biarkan apa yang tidak bisa kamu lakukan mengganggu apa yang bisa kamu lakukan.", author: "John Wooden" },
-        { text: "Satu-satunya cara untuk melakukan pekerjaan hebat adalah mencintai apa yang kamu lakukan.", author: "Steve Jobs" },
-        { text: "Kebahagiaan bukan sesuatu yang sudah jadi. Itu datang dari tindakanmu sendiri.", author: "Dalai Lama" },
-        { text: "Mengubah cara pandangmu terhadap hal-hal, mengubah hal-hal yang kamu pandang.", author: "Wayne Dyer" },
-        { text: "Kamu lebih berani dari yang kamu yakini, lebih kuat dari yang terlihat, dan lebih pintar dari yang kamu kira.", author: "A.A. Milne (Winnie The Pooh)" }
-    ];
 
     /**********************
      * Render questions into each panel (Using INPUT TYPE="NUMBER")
@@ -687,89 +806,59 @@
     });
 
     /**********************
-     * QUOTES dropdown behavior
+     * CAROUSEL SCRIPT
      **********************/
-    const quoteSelect = document.getElementById('quote-select');
-    const currentQuote = document.getElementById('current-quote');
-    const quoteAuthor = document.getElementById('quote-author');
+    const slidesContainer = document.querySelector('.carousel-slides');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.carousel-nav-btn.prev');
+    const nextButton = document.querySelector('.carousel-nav-btn.next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const body = document.body; // Used for theme retrieval
 
-    quoteList.forEach((q, i) => {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = `"${q.text.substring(0, 40)}..." - ${q.author}`;
-        quoteSelect.appendChild(option);
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    // 1. Create Dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('carousel-dot');
+        dot.setAttribute('data-index', i);
+        dotsContainer.appendChild(dot);
+        dot.addEventListener('click', () => {
+            showSlide(i);
+            resetAutoSlide();
+        });
     });
 
-    // Set initial quote
-    currentQuote.textContent = `"${quoteList[0].text}"`;
-    quoteAuthor.textContent = `~ ${quoteList[0].author}`;
+    const dots = document.querySelectorAll('.carousel-dot');
 
-    quoteSelect.addEventListener('change', function(){
-        const selectedIndex = parseInt(this.value, 10);
-        const q = quoteList[selectedIndex];
-        currentQuote.textContent = `"${q.text}"`;
-        quoteAuthor.textContent = `~ ${q.author}`;
-    });
+    // 2. Main Slide Function
+    function showSlide(index) {
+        if (index >= slides.length) {
+            index = 0;
+        } else if (index < 0) {
+            index = slides.length - 1;
+        }
+        currentIndex = index;
+        
+        // Update slides position
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-    /**********************
-     * Theme chooser: apply themes via data-attributes
-     **********************/
-    const themeSelect = document.getElementById('theme-select');
-    const headerElement = document.getElementById('main-header');
-    const h2Elements = document.querySelectorAll('h2');
-    const navLinks = document.querySelectorAll('nav ul li a');
-    const buttons = document.querySelectorAll('button, .btn');
-    const body = document.body;
-    const themeLabel = document.querySelector('header nav .theme-chooser label');
+        // Update dots (handling theme for dot color)
+        dots.forEach(dot => {
+            dot.classList.remove('active');
+            dot.removeAttribute('data-theme');
+        });
 
+        const activeDot = dots[currentIndex];
+        const currentTheme = body.getAttribute('data-theme');
 
-    // Apply initial theme (default theme has no data-theme attr)
-    function applyTheme(theme) {
-        // Reset all data-theme attributes
-        body.removeAttribute('data-theme');
-        headerElement.removeAttribute('data-theme');
-        h2Elements.forEach(h => h.removeAttribute('data-theme'));
-        buttons.forEach(b => b.removeAttribute('data-theme'));
-        navLinks.forEach(a => a.removeAttribute('data-theme'));
-        quoteAuthor.removeAttribute('data-theme');
-
-        if (theme !== 'default') {
-            body.setAttribute('data-theme', theme);
-            headerElement.setAttribute('data-theme', theme);
-            h2Elements.forEach(h => h.setAttribute('data-theme', theme));
-            buttons.forEach(b => b.setAttribute('data-theme', theme));
-            navLinks.forEach(a => a.setAttribute('data-theme', theme));
-            quoteAuthor.setAttribute('data-theme', theme);
+        if (activeDot) {
+            activeDot.classList.add('active');
+            if (currentTheme) {
+                 activeDot.setAttribute('data-theme', currentTheme);
+            }
         }
     }
 
-    themeSelect.addEventListener('change', (e) => {
-        applyTheme(e.target.value);
-    });
-
-    // We must ensure the theme select dropdown's label also follows the color theme.
-    // This is handled by CSS, but we can re-apply the theme here just in case.
-    if (themeSelect.value === 'default') {
-        applyTheme('default');
-    } else {
-        applyTheme(themeSelect.value);
-    }
-    
-
-    /**********************
-     * Extra: small keyboard accessibility for tabs
-     **********************/
-    document.querySelectorAll('.tab').forEach((t, i, list) => {
-      t.setAttribute('tabindex','0');
-      t.addEventListener('keydown', (e)=>{
-        if (e.key === 'ArrowRight') { list[(i+1)%list.length].focus(); e.preventDefault(); }
-        if (e.key === 'ArrowLeft') { list[(i-1+list.length)%list.length].focus(); e.preventDefault(); }
-        if (e.key === 'Enter' || e.key === ' ') t.click();
-      });
-    });
-
-    // Initialize the default theme settings
-    applyTheme('default');
-  </script>
-</body>
-</html>
+    // 3. Navigation Controls

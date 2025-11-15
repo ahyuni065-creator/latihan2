@@ -53,9 +53,6 @@
       text-fill-color: transparent;
     }
 
-    /* Override H2 margin for the Angket section since it's now wrapped in a flex container */
-    #angket h2 { margin-bottom: 0; }
-
     form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
 
     .question { margin-bottom:12px; }
@@ -144,19 +141,36 @@
     }
     
     /* Theme chooser: DROPDOWN style */
-    .theme-chooser select, #quote-select {
-      padding:8px 12px; border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-      min-width: 180px;
-      appearance: auto; /* Kembalikan default appearance untuk select */
+    .theme-chooser {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 0; /* Padding agar sejajar dengan link navigasi */
     }
+    .theme-chooser select, #quote-select {
+      padding:4px 8px; /* Dikecilkan agar pas di nav */
+      border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      min-width: 130px;
+      appearance: auto;
+      font-size: 0.9rem;
+    }
+    
+    /* Style untuk label tema di header (agar mengikuti warna link) */
+    header nav .theme-chooser label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #3a5fbf; /* Default Dark Blue */
+        white-space: nowrap;
+    }
+
 
     /* ==============================
        Theme Specific Styles (Dark Font Colors)
        ============================== */
     /* Pastel Pink Theme */
     body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
-    header[data-theme="pink"] h1, header[data-theme="pink"] nav ul li a { color: #7d445c; }
+    header[data-theme="pink"] h1, header[data-theme="pink"] nav ul li a, header[data-theme="pink"] nav .theme-chooser label { color: #7d445c; }
     h2[data-theme="pink"], #quote-author[data-theme="pink"] {
         color: #c4407b; /* Darker Pink for headings/accents */
         background: none;
@@ -166,7 +180,7 @@
 
     /* Pastel Blue Theme */
     body[data-theme="blue"] { color: #30538a; } /* Dark Blue for all text */
-    header[data-theme="blue"] h1, header[data-theme="blue"] nav ul li a { color: #30538a; }
+    header[data-theme="blue"] h1, header[data-theme="blue"] nav ul li a, header[data-theme="blue"] nav .theme-chooser label { color: #30538a; }
     h2[data-theme="blue"], #quote-author[data-theme="blue"] {
         color: #1a407a; /* Darker Blue for headings/accents */
         background: none;
@@ -176,7 +190,7 @@
 
     /* Pastel Purple Theme */
     body[data-theme="purple"] { color: #53308a; } /* Dark Purple for all text */
-    header[data-theme="purple"] h1, header[data-theme="purple"] nav ul li a { color: #53308a; }
+    header[data-theme="purple"] h1, header[data-theme="purple"] nav ul li a, header[data-theme="purple"] nav .theme-chooser label { color: #53308a; }
     h2[data-theme="purple"], #quote-author[data-theme="purple"] {
         color: #6035b3; /* Darker Purple for headings/accents */
         background: none;
@@ -186,7 +200,7 @@
 
     /* Gradient Rainbow Theme */
     body[data-theme="rainbow"] { color: #333; } /* Base color dark */
-    header[data-theme="rainbow"] h1, header[data-theme="rainbow"] nav ul li a { color: #333; }
+    header[data-theme="rainbow"] h1, header[data-theme="rainbow"] nav ul li a, header[data-theme="rainbow"] nav .theme-chooser label { color: #333; }
     h2[data-theme="rainbow"], #quote-author[data-theme="rainbow"] {
         /* Dark Rainbow Gradient for headings/accents */
         background: linear-gradient(90deg, #b3579b, #3a5fbf, #53308a);
@@ -212,6 +226,10 @@
       .cloud.c1, .cloud.c2, .cloud.c3 { display:block; opacity:.6; }
       .questions-grid { grid-template-columns: 1fr; } /* Satu kolom di layar kecil */
     }
+    @media (max-width: 550px) {
+        nav ul { flex-direction: column; gap: 5px; } /* Susun vertikal jika layar terlalu sempit */
+        .theme-chooser { justify-content: center; }
+    }
 
   </style>
 </head>
@@ -236,6 +254,18 @@
         <li><a href="#tanda">Tanda-tanda</a></li>
         <li><a href="#mengatasi">Mengatasi</a></li>
         <li><a href="#angket">Tes Mental</a></li>
+        <li class="theme-menu-item">
+            <div class="theme-chooser">
+                <label for="theme-select">Tema:</label>
+                <select id="theme-select" aria-label="Pilih tema warna">
+                    <option value="default">Default (Blue/Pink)</option>
+                    <option value="pink">Pastel Pink</option>
+                    <option value="blue">Pastel Blue</option>
+                    <option value="purple">Pastel Purple</option>
+                    <option value="rainbow">Gradient Rainbow</option>
+                </select>
+            </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -274,19 +304,7 @@
   </section>
 
   <section id="angket">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:15px;">
-        <h2 id="h2-angket">Tes Kesehatan Mental</h2>
-        <div class="theme-chooser">
-            <label for="theme-select" style="font-size:0.9rem; color:inherit;">Tema Warna:</label>
-            <select id="theme-select" aria-label="Pilih tema warna">
-                <option value="default">Default (Blue/Pink)</option>
-                <option value="pink">Pastel Pink</option>
-                <option value="blue">Pastel Blue</option>
-                <option value="purple">Pastel Purple</option>
-                <option value="rainbow">Gradient Rainbow</option>
-            </select>
-        </div>
-    </div>
+    <h2 id="h2-angket">Tes Kesehatan Mental</h2>
 
     <button id="toggle-test-btn" class="btn" style="margin-bottom:20px;">
         Mulai Tes Kesehatan <span class="toggle-icon">▼</span>
@@ -295,7 +313,7 @@
     <div id="test-content-container" class="card" style="display:none;">
       
         <div>
-            <div class="tests-tabs" role="tablist" aria-label="Pilih tes">
+            <div class="tests-tabs" role="tablist" aria-label="Pilih tes" style="margin-bottom: 14px;">
                 <button class="tab active" data-test="stres">Tes Stres (15)</button>
                 <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
                 <button class="tab" data-test="kebahagiaan">Tes Kebahagiaan</button>
@@ -702,6 +720,8 @@
     const navLinks = document.querySelectorAll('nav ul li a');
     const buttons = document.querySelectorAll('button, .btn');
     const body = document.body;
+    const themeLabel = document.querySelector('header nav .theme-chooser label');
+
 
     // Apply initial theme (default theme has no data-theme attr)
     function applyTheme(theme) {
@@ -726,6 +746,15 @@
     themeSelect.addEventListener('change', (e) => {
         applyTheme(e.target.value);
     });
+
+    // We must ensure the theme select dropdown's label also follows the color theme.
+    // This is handled by CSS, but we can re-apply the theme here just in case.
+    if (themeSelect.value === 'default') {
+        applyTheme('default');
+    } else {
+        applyTheme(themeSelect.value);
+    }
+    
 
     /**********************
      * Extra: small keyboard accessibility for tabs

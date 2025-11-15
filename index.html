@@ -124,7 +124,7 @@
         gap:8px;
         align-items:center;
     }
-    
+
     /* ==============================
        NEW CAROUSEL STYLES
        ============================== */
@@ -491,6 +491,465 @@
 
   <section id="quotes" style="max-width:980px;margin:30px auto;">
     <h2 id="h2-quotes">Motivasi Visual Aesthetic</h2>
-    <div id="quotes-section">
+    <div id="quotes-section" style="padding: 0; border-radius:12px; background: none; box-shadow: none; overflow: hidden; position: relative;">
       <div class="carousel-container">
         <div class="carousel-slides">
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1518066000714-cdcd82531732?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cloud pastel">
+                <div class="carousel-caption">
+                    <p>Setiap awan gelap pasti berlalu.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1542401886-65d6c61d56e8?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hati pastel">
+                <div class="carousel-caption">
+                    <p>Cintai dirimu, selalu.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1533167732292-3c1a32997184?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bunga lembut pastel">
+                <div class="carousel-caption">
+                    <p>Tumbuhlah, seperti bunga yang mekar.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1528459463991-8c4187019803?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sunset pastel">
+                <div class="carousel-caption">
+                    <p>Indahnya dirimu, sama seperti senja.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1517833503254-0f3b0e3e5c9f?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Dreamy pastel gradient">
+                <div class="carousel-caption">
+                    <p>Mimpi adalah nyata, percayalah.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-nav-btn prev">❮</button>
+        <button class="carousel-nav-btn next">❯</button>
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️</p>
+  </footer>
+
+  <script>
+    /**********************
+     * UTIL: questions templates (placeholder texts)
+     **********************/
+    const sampleQs = {
+      stres: [
+        "Saya merasa mudah marah atau tersinggung.",
+        "Saya sulit rileks.",
+        "Saya merasa tertekan dengan tuntutan sehari-hari.",
+        "Pikiran saya sering berputar tanpa henti.",
+        "Saya merasa lelah karena beban pikiran.",
+        "Saya mudah terganggu oleh hal kecil.",
+        "Saya merasa tidak sabar.",
+        "Saya khawatir tidak bisa menyelesaikan tugas.",
+        "Saya sering merasa cemas tanpa alasan jelas.",
+        "Tidur saya terganggu karena pikiran.",
+        "Saya merasa tegang otot atau sakit kepala karena stres.",
+        "Saya sulit berkonsentrasi.",
+        "Saya khawatir berlebihan tentang masa depan.",
+        "Saya merasa kewalahan ketika banyak tugas.",
+        "Saya sulit menenangkan diri setelah kejadian menegangkan."
+      ],
+      kecemasan: [
+        "Saya sering merasa cemas tanpa alasan yang jelas.",
+        "Saya khawatir berlebihan terhadap hal kecil.",
+        "Saya merasa gelisah di keramaian.",
+        "Saya sulit tidur karena pikiran cemas.",
+        "Saya khawatir tentang kesehatan saya terus-menerus.",
+        "Saya merasa napas cepat saat cemas.",
+        "Saya menghindari situasi karena takut cemas.",
+        "Saya merasa ada yang tidak terkendali.",
+        "Saya sering memikirkan kemungkinan terburuk.",
+        "Saya sulit menenangkan diri saat khawatir."
+      ],
+      kebahagiaan: [
+        "Saya merasa puas dengan hidup saya saat ini.",
+        "Saya mudah merasakan kebahagiaan dalam hal sederhana.",
+        "Saya merasa memiliki tujuan yang memotivasi.",
+        "Saya merasa dekat dan terhubung dengan orang lain.",
+        "Saya menikmati waktu sendirian tanpa merasa sedih.",
+        "Saya sering tersenyum tanpa alasan khusus.",
+        "Saya bersyukur atas hal-hal kecil setiap hari.",
+        "Saya merasa optimis tentang masa depan."
+      ],
+      keseimbangan: [
+        "Saya merasa pekerjaan dan kehidupan pribadi seimbang.",
+        "Saya cukup tidur dan istirahat.",
+        "Saya punya waktu untuk hobi dan rekreasi.",
+        "Saya menjaga pola makan yang baik.",
+        "Saya meluangkan waktu untuk olahraga.",
+        "Saya merasa hubungan sosial saya sehat.",
+        "Saya memiliki waktu untuk refleksi diri.",
+        "Saya bisa mengelola stres secara rutin.",
+        "Saya merasa punya dukungan saat sulit.",
+        "Saya memberi waktu untuk pengembangan diri.",
+        "Saya merasa bebas dari beban finansial yang berlebihan.",
+        "Saya menikmati kegiatan yang menenangkan."
+      ]
+    };
+
+    // QUOTE LIST LAMA DIHAPUS
+
+    /**********************
+     * Render questions into each panel (Using INPUT TYPE="NUMBER")
+     **********************/
+    document.querySelectorAll('.test-panel').forEach(panel=>{
+      const form = panel.querySelector('.test-form');
+      const grid = form.querySelector('.questions-grid');
+      const qKey = panel.dataset.testpanel;
+      const qArr = sampleQs[qKey] || [];
+      const questionsCount = parseInt(form.dataset.questions,10) || qArr.length;
+
+      let finalQs = [];
+      for (let i=0;i<questionsCount;i++){
+        finalQs.push(qArr[i % qArr.length] || `Pertanyaan ${i+1}`);
+      }
+
+      grid.innerHTML = '';
+      finalQs.forEach((q,i)=>{
+        const idx = i+1;
+        const item = document.createElement('div');
+        item.className = 'card question-item';
+        item.innerHTML = `
+          <label class="question-label" for="${qKey}-q${idx}">${idx}. ${q}</label>
+          <div class="score-control">
+            <input type="number" id="${qKey}-q${idx}" name="${qKey}-q${idx}" required min="1" max="5" value="1" data-qindex="${i}">
+            <small style="color:inherit;">(Skor 1-5)</small>
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+    });
+
+    /**********************
+     * Toggle Test Content Visibility
+     **********************/
+    const toggleBtn = document.getElementById('toggle-test-btn');
+    const testContainer = document.getElementById('test-content-container');
+    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+
+    toggleBtn.addEventListener('click', () => {
+        const isHidden = testContainer.style.display === 'none';
+        
+        if (isHidden) {
+            testContainer.style.display = 'block';
+            toggleBtn.innerHTML = 'Sembunyikan Tes Kesehatan <span class="toggle-icon">▲</span>';
+            // Scroll to the top of the test content area for better UX
+            testContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            testContainer.style.display = 'none';
+            toggleBtn.innerHTML = 'Mulai Tes Kesehatan <span class="toggle-icon">▼</span>';
+        }
+    });
+
+    /**********************
+     * Tabs behavior
+     **********************/
+    document.querySelectorAll('.tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const key = t.dataset.test;
+        document.querySelectorAll('.test-panel').forEach(p=>{
+          p.classList.toggle('active', p.dataset.testpanel === key);
+        });
+        document.getElementById('hasil-area').style.display = 'none';
+        // Reset inputs on switch (optional, but good UX)
+        document.querySelectorAll('.test-form input[type="number"]').forEach(s => s.value = 1);
+      });
+    });
+
+    /**********************
+     * Scoring & Interpretation (common function)
+     **********************/
+    function interpretResult(total, questions, testKey){
+      const max = questions*5;
+      // we'll compute 'scorePercent' similar: healthier => higher percent (lower total for Stres/Cemas is better)
+      const healthyPercent = Math.round(((max - total) / max) * 100);
+      let emoji='🙂', title='OK', interp='';
+
+      if (testKey === 'kebahagiaan') {
+        // For 'kebahagiaan', a higher raw score (total) means better (healthier). We need to invert the formula logic for this test.
+        const happinessScore = total; // 8*1 (8) to 8*5 (40)
+        const min = questions*1;
+        const happyPercent = Math.round(((happinessScore - min) / (max - min)) * 100);
+
+        if (happyPercent >= 80) { emoji='🤩'; title='Sangat Bahagia'; interp='Kamu merasa sangat bahagia. Pertahankan rasa syukur dan kebiasaan positif.'; }
+        else if (happyPercent >= 50) { emoji='😊'; title='Cukup Bahagia'; interp='Kamu cukup bahagia. Coba rutinitas kecil yang membahagiakan untuk meningkatkannya.'; }
+        else { emoji='😕'; title='Kurang Bahagia'; interp='Pertimbangkan aktivitas yang memberi makna dan meningkatkan hubungan sosial.'; }
+        return { emoji, title, interp, healthyPercent: happyPercent }; // Return happyPercent as the score
+      }
+
+      // For Stres, Kecemasan, Keseimbangan: lower total = higher healthyPercent
+      if (testKey === 'stres') {
+        if (healthyPercent >= 80) { emoji='😌'; title='Stres Rendah'; interp='Kamu tampak punya mekanisme koping yang baik. Pertahankan kebiasaan positif.'; }
+        else if (healthyPercent >= 50) { emoji='🙂'; title='Stres Sedang'; interp='Perhatikan tanda-tanda stres — coba teknik relaksasi seperti bernapas atau jalan singkat.'; }
+        else { emoji='😟'; title='Stres Tinggi'; interp='Kamu mengalami tingkat stres yang cukup tinggi. Pertimbangkan berbicara dengan orang terpercaya atau profesional.'; }
+      } else if (testKey === 'kecemasan') {
+        if (healthyPercent >= 80) { emoji='😊'; title='Kecemasan Rendah'; interp='Kecemasanmu rendah. Lanjutkan aktivitas yang menenangkan.'; }
+        else if (healthyPercent >= 50) { emoji='😐'; title='Kecemasan Sedang'; interp='Coba teknik pernapasan, kurangi kafein, dan istirahat cukup.'; }
+        else { emoji='😰'; title='Kecemasan Tinggi'; interp='Pertimbangkan dukungan lebih lanjut — konsultasi profesional dapat membantu.'; }
+      } else if (testKey === 'keseimbangan') {
+        if (healthyPercent >= 80) { emoji='🌿'; title='Seimbang'; interp='Kehidupanmu tampak seimbang. Jaga konsistensi dan istirahat.'; }
+        else if (healthyPercent >= 50) { emoji='⚖️'; title='Cukup Seimbang'; interp='Perhatikan area yang kurang — coba atur jadwal dan kurangi beban.'; }
+        else { emoji='🔄'; title='Kurang Seimbang'; interp='Pertimbangkan langkah sederhana: tidur, olahraga ringan, dan dukungan sosial.'; }
+      } else {
+        // Fallback for any other test
+        if (healthyPercent >= 80) { emoji='🙂'; title='Baik'; interp='Hasil menunjukkan kondisi yang cukup baik.'; }
+        else if (healthyPercent >= 50) { emoji='😐'; title='Perlu Perhatian'; interp='Perlu beberapa perbaikan.'; }
+        else { emoji='😟'; title='Perhatian Lebih'; interp='Disarankan untuk mencari dukungan.'; }
+      }
+
+      return { emoji, title, interp, healthyPercent };
+    }
+
+
+    /**********************
+     * Handle form submissions for all tests
+     **********************/
+    document.querySelectorAll('.test-form').forEach(form=>{
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // Use number inputs
+        const inputs = Array.from(form.querySelectorAll('input[type="number"]'));
+
+        // Check for required fields and value range
+        let total = 0;
+        let isValid = true;
+        inputs.forEach(inp => {
+            let v = parseInt(inp.value,10);
+            if (isNaN(v) || v < 1 || v > 5) {
+                isValid = false;
+                inp.style.border = '2px solid red'; // Highlight invalid input
+            } else {
+                inp.style.border = '1px solid #ddd'; // Reset border
+                total += v;
+            }
+        });
+
+        if (!isValid) {
+            alert("Harap isi semua pertanyaan dengan skor antara 1 sampai 5.");
+            return;
+        }
+
+        const activePanel = form.closest('.test-panel');
+        const testKey = activePanel ? activePanel.dataset.testpanel : 'test';
+        const questions = inputs.length;
+
+        const res = interpretResult(total, questions, testKey);
+
+        // show hasil-area
+        document.getElementById('hasil-area').style.display = 'block';
+        document.getElementById('hasil-title').textContent = res.title + ' — ' + testKey.charAt(0).toUpperCase() + testKey.slice(1);
+        document.getElementById('hasil-emoji').textContent = res.emoji;
+        document.getElementById('hasil-score').textContent = `Skor kesehatan (lebih tinggi = lebih baik): ${res.healthyPercent}%`;
+        document.getElementById('hasil-interpretasi').textContent = res.interp;
+
+        // store last result in DOM for save/download
+        document.getElementById('hasil-area').dataset.lastResult = JSON.stringify({
+          testKey, total, questions, ...res, timestamp: new Date().toISOString()
+        });
+
+        // scroll into view
+        document.getElementById('hasil-area').scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    /**********************
+     * Reset buttons per panel
+     **********************/
+    document.querySelectorAll('.btn-reset').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const form = btn.closest('.test-panel').querySelector('.test-form');
+        // Reset input value to 1
+        form.querySelectorAll('input[type="number"]').forEach(i=>{
+            i.value = 1;
+            i.style.border = '1px solid #ddd'; // Reset border
+        });
+        document.getElementById('hasil-area').style.display = 'none';
+      });
+    });
+
+    /**********************
+     * Save result locally (localStorage)
+     **********************/
+    document.getElementById('saveLocal').addEventListener('click', ()=>{
+      const area = document.getElementById('hasil-area');
+      const last = area.dataset.lastResult;
+      if (!last) { alert('Belum ada hasil untuk disimpan.'); return; }
+      const results = JSON.parse(localStorage.getItem('mh_results') || '[]');
+      results.push(JSON.parse(last));
+      localStorage.setItem('mh_results', JSON.stringify(results));
+      alert('Hasil tersimpan (local).');
+    });
+
+    /**********************
+     * Download result as text
+     **********************/
+    document.getElementById('downloadResult').addEventListener('click', ()=>{
+      const area = document.getElementById('hasil-area');
+      const last = area.dataset.lastResult;
+      if (!last) { alert('Belum ada hasil untuk didownload.'); return; }
+      const data = JSON.parse(last);
+      const content = `Hasil Tes: ${data.testKey}\nWaktu: ${data.timestamp}\nSkor: ${data.healthyPercent}%\nInterpretasi: ${data.interp}\nEmoji: ${data.emoji}\n`;
+      const blob = new Blob([content], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `hasil-${data.testKey}.txt`; document.body.appendChild(a);
+      a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // QUOTES DROPDOWN LOGIC LAMA DIHAPUS
+
+    /**********************
+     * CAROUSEL SCRIPT
+     **********************/
+    const slidesContainer = document.querySelector('.carousel-slides');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.carousel-nav-btn.prev');
+    const nextButton = document.querySelector('.carousel-nav-btn.next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const body = document.body; // Sudah didefinisikan sebelumnya, digunakan di sini.
+
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    // 1. Create Dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('carousel-dot');
+        dot.setAttribute('data-index', i);
+        dotsContainer.appendChild(dot);
+        dot.addEventListener('click', () => {
+            showSlide(i);
+            resetAutoSlide();
+        });
+    });
+
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    // 2. Main Slide Function
+    function showSlide(index) {
+        if (index >= slides.length) {
+            index = 0;
+        } else if (index < 0) {
+            index = slides.length - 1;
+        }
+        currentIndex = index;
+        
+        // Update slides position
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // Update dots (handling theme for dot color)
+        dots.forEach(dot => {
+            dot.classList.remove('active');
+            dot.removeAttribute('data-theme');
+        });
+
+        const activeDot = dots[currentIndex];
+        const currentTheme = body.getAttribute('data-theme');
+
+        if (activeDot) {
+            activeDot.classList.add('active');
+            if (currentTheme) {
+                 activeDot.setAttribute('data-theme', currentTheme);
+            }
+        }
+    }
+
+    // 3. Navigation Controls
+    prevButton.addEventListener('click', () => {
+        showSlide(currentIndex - 1);
+        resetAutoSlide();
+    });
+
+    nextButton.addEventListener('click', () => {
+        showSlide(currentIndex + 1);
+        resetAutoSlide();
+    });
+
+    // 4. Auto Slide
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 5000); // Ganti slide setiap 5 detik
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+    
+    // 5. Theme Chooser: apply themes via data-attributes
+    const themeSelect = document.getElementById('theme-select');
+    const headerElement = document.getElementById('main-header');
+    const h2Elements = document.querySelectorAll('h2');
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const buttons = document.querySelectorAll('button, .btn');
+    const carouselCaptions = document.querySelectorAll('.carousel-caption');
+
+
+    // Apply initial theme (default theme has no data-theme attr)
+    function applyTheme(theme) {
+        // Reset all data-theme attributes
+        body.removeAttribute('data-theme');
+        headerElement.removeAttribute('data-theme');
+        h2Elements.forEach(h => h.removeAttribute('data-theme'));
+        buttons.forEach(b => b.removeAttribute('data-theme'));
+        navLinks.forEach(a => a.removeAttribute('data-theme'));
+        carouselCaptions.forEach(c => c.removeAttribute('data-theme'));
+        dots.forEach(d => d.removeAttribute('data-theme'));
+
+
+        if (theme !== 'default') {
+            body.setAttribute('data-theme', theme);
+            headerElement.setAttribute('data-theme', theme);
+            h2Elements.forEach(h => h.setAttribute('data-theme', theme));
+            buttons.forEach(b => b.setAttribute('data-theme', theme));
+            navLinks.forEach(a => a.setAttribute('data-theme', theme));
+            carouselCaptions.forEach(c => c.setAttribute('data-theme', theme));
+        }
+
+        // Re-apply theme to active dot
+        const activeDot = dots[currentIndex];
+        if (activeDot && theme !== 'default') {
+             activeDot.setAttribute('data-theme', theme);
+        } else if (activeDot) {
+             activeDot.removeAttribute('data-theme');
+        }
+    }
+
+    themeSelect.addEventListener('change', (e) => {
+        applyTheme(e.target.value);
+    });
+
+    // Initial load for Carousel
+    showSlide(0);
+    startAutoSlide();
+    
+    // Initialize the default theme settings
+    applyTheme(themeSelect.value);
+
+
+    /**********************
+     * Extra: small keyboard accessibility for tabs
+     **********************/
+    document.querySelectorAll('.tab').forEach((t, i, list) => {
+      t.setAttribute('tabindex','0');
+      t.addEventListener('keydown', (e)=>{
+        if (e.key === 'ArrowRight') { list[(i+1)%list.length].focus(); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { list[(i-1+list.length)%list.length].focus(); e.preventDefault(); }
+        if (e.key === 'Enter' || e.key === ' ') t.click();
+      });
+    });
+  </script>
+</body>
+</html>

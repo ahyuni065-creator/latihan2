@@ -53,10 +53,13 @@
       text-fill-color: transparent;
     }
 
+    /* Override H2 margin for the Angket section since it's now wrapped in a flex container */
+    #angket h2 { margin-bottom: 0; }
+
     form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
 
     .question { margin-bottom:12px; }
-    /* INPUT NUMBER STYLE (DIKEMBALIKAN KE BENTUK INI) */
+    /* INPUT NUMBER STYLE */
     input[type="number"] {
       padding:8px;
       border-radius:6px;
@@ -271,90 +274,96 @@
   </section>
 
   <section id="angket">
-    <h2 id="h2-angket">Tes Kesehatan Mental</h2>
-
-    <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
-        <div class="tests-tabs" role="tablist" aria-label="Pilih tes">
-          <button class="tab active" data-test="stres">Tes Stres (15)</button>
-          <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
-          <button class="tab" data-test="kebahagiaan">Tes Kebahagiaan</button>
-          <button class="tab" data-test="keseimbangan">Tes Keseimbangan Hidup</button>
-        </div>
-
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:15px;">
+        <h2 id="h2-angket">Tes Kesehatan Mental</h2>
         <div class="theme-chooser">
-          <label for="theme-select" style="font-size:0.9rem; color:inherit;">Tema Warna:</label>
-          <select id="theme-select" aria-label="Pilih tema warna">
-            <option value="default">Default (Blue/Pink)</option>
-            <option value="pink">Pastel Pink</option>
-            <option value="blue">Pastel Blue</option>
-            <option value="purple">Pastel Purple</option>
-            <option value="rainbow">Gradient Rainbow</option>
-          </select>
+            <label for="theme-select" style="font-size:0.9rem; color:inherit;">Tema Warna:</label>
+            <select id="theme-select" aria-label="Pilih tema warna">
+                <option value="default">Default (Blue/Pink)</option>
+                <option value="pink">Pastel Pink</option>
+                <option value="blue">Pastel Blue</option>
+                <option value="purple">Pastel Purple</option>
+                <option value="rainbow">Gradient Rainbow</option>
+            </select>
         </div>
-      </div>
+    </div>
 
-      <div id="panels" style="margin-top:14px;">
-        <div class="test-panel active" data-testpanel="stres">
-          <form class="test-form" data-questions="15">
-            <div style="display:flex;flex-direction:column;gap:15px;">
-              <div class="questions-grid">
+    <button id="toggle-test-btn" class="btn" style="margin-bottom:20px;">
+        Mulai Tes Kesehatan <span class="toggle-icon">▼</span>
+    </button>
+
+    <div id="test-content-container" class="card" style="display:none;">
+      
+        <div>
+            <div class="tests-tabs" role="tablist" aria-label="Pilih tes">
+                <button class="tab active" data-test="stres">Tes Stres (15)</button>
+                <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
+                <button class="tab" data-test="kebahagiaan">Tes Kebahagiaan</button>
+                <button class="tab" data-test="keseimbangan">Tes Keseimbangan Hidup</button>
+            </div>
+            
+            <div id="panels" style="margin-top:14px;">
+                <div class="test-panel active" data-testpanel="stres">
+                    <form class="test-form" data-questions="15">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid">
+                                </div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn" id="submitStres">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              <div style="display:flex;gap:10px; margin-top:8px;">
-                <button type="submit" class="btn" id="submitStres">Lihat Hasil <span class="hover-ico">✨</span></button>
-                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-              </div>
-            </div>
-          </form>
-        </div>
 
-        <div class="test-panel" data-testpanel="kecemasan">
-          <form class="test-form" data-questions="10">
-            <div style="display:flex;flex-direction:column;gap:15px;">
-              <div class="questions-grid"></div>
-              <div style="display:flex;gap:10px; margin-top:8px;">
-                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-              </div>
-            </div>
-          </form>
-        </div>
+                <div class="test-panel" data-testpanel="kecemasan">
+                    <form class="test-form" data-questions="10">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-        <div class="test-panel" data-testpanel="kebahagiaan">
-          <form class="test-form" data-questions="8">
-            <div style="display:flex;flex-direction:column;gap:15px;">
-              <div class="questions-grid"></div>
-              <div style="display:flex;gap:10px; margin-top:8px;">
-                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-              </div>
-            </div>
-          </form>
-        </div>
+                <div class="test-panel" data-testpanel="kebahagiaan">
+                    <form class="test-form" data-questions="8">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-        <div class="test-panel" data-testpanel="keseimbangan">
-          <form class="test-form" data-questions="12">
-            <div style="display:flex;flex-direction:column;gap:15px;">
-              <div class="questions-grid"></div>
-              <div style="display:flex;gap:10px; margin-top:8px;">
-                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-              </div>
+                <div class="test-panel" data-testpanel="keseimbangan">
+                    <form class="test-form" data-questions="12">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </form>
-        </div>
-      </div>
 
-      <div id="hasil-area" style="margin-top:16px; display:none;" class="card">
-        <h3 id="hasil-title">Hasil Tes</h3>
-        <p id="hasil-emoji" style="font-size:2rem; margin:8px 0;">🙂</p>
-        <p id="hasil-score" style="font-weight:700;"></p>
-        <p id="hasil-interpretasi"></p>
-        <div style="margin-top:8px; display:flex; gap:8px;">
-          <button class="btn" id="saveLocal">Simpan Hasil <span class="hover-ico">♡</span></button>
-          <button class="btn" id="downloadResult" style="background:#fff;color:#333;border:1px solid #eee;">Download <span class="hover-ico">✨</span></button>
+            <div id="hasil-area" style="margin-top:16px; display:none;" class="card">
+                <h3 id="hasil-title">Hasil Tes</h3>
+                <p id="hasil-emoji" style="font-size:2rem; margin:8px 0;">🙂</p>
+                <p id="hasil-score" style="font-weight:700;"></p>
+                <p id="hasil-interpretasi"></p>
+                <div style="margin-top:8px; display:flex; gap:8px;">
+                    <button class="btn" id="saveLocal">Simpan Hasil <span class="hover-ico">♡</span></button>
+                    <button class="btn" id="downloadResult" style="background:#fff;color:#333;border:1px solid #eee;">Download <span class="hover-ico">✨</span></button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
   </section>
 
@@ -451,7 +460,7 @@
     ];
 
     /**********************
-     * Render questions into each panel (Modified to use INPUT TYPE="NUMBER")
+     * Render questions into each panel (Using INPUT TYPE="NUMBER")
      **********************/
     document.querySelectorAll('.test-panel').forEach(panel=>{
       const form = panel.querySelector('.test-form');
@@ -479,6 +488,27 @@
         `;
         grid.appendChild(item);
       });
+    });
+
+    /**********************
+     * Toggle Test Content Visibility
+     **********************/
+    const toggleBtn = document.getElementById('toggle-test-btn');
+    const testContainer = document.getElementById('test-content-container');
+    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+
+    toggleBtn.addEventListener('click', () => {
+        const isHidden = testContainer.style.display === 'none';
+        
+        if (isHidden) {
+            testContainer.style.display = 'block';
+            toggleBtn.innerHTML = 'Sembunyikan Tes Kesehatan <span class="toggle-icon">▲</span>';
+            // Scroll to the top of the test content area for better UX
+            testContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            testContainer.style.display = 'none';
+            toggleBtn.innerHTML = 'Mulai Tes Kesehatan <span class="toggle-icon">▼</span>';
+        }
     });
 
     /**********************

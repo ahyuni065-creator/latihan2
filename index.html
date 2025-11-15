@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kesehatan Mental</title>
 
-  <!-- Jika kamu masih punya style.css, file ini tetap akan dipakai.
-       Namun semua override untuk fitur baru diletakkan di <style> supaya gampang dipakai langsung. -->
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -14,7 +12,7 @@
        BASE OVERRIDES: tetap jaga struktur awal
        ============================== */
     * { box-sizing: border-box; margin:0; padding:0; font-family: "Poppins", "Segoe UI", Roboto, sans-serif; }
-    body { color: #333; line-height:1.6; min-height:100vh; position:relative; overflow-x:hidden; }
+    body { color: #333; line-height:1.6; min-height:100vh; position:relative; overflow-x:hidden; transition: background-color .3s ease; }
 
     /* Pastel background utama + slow gradient */
     body::before{
@@ -23,6 +21,7 @@
       inset: 0;
       z-index: -100;
       background: linear-gradient(135deg, #f7f9ff 0%, #f2f7ff 40%, #fff4fb 100%);
+      transition: background .4s ease; /* Tambahkan transisi untuk tema */
     }
 
     /* Header - sekarang bergradien biru->pink (tetap kotak) */
@@ -33,6 +32,7 @@
       text-align: center;
       position: relative;
       overflow: visible;
+      transition: background .4s ease; /* Tambahkan transisi untuk tema */
     }
     header h1 { margin-bottom: 8px; font-size: 1.8rem; }
 
@@ -41,12 +41,13 @@
 
     section { padding: 40px 20px; max-width: 900px; margin: 20px auto; background: transparent; }
 
-    h2 { color: #7aa3ff; margin-bottom:10px; }
+    h2 { color: #7aa3ff; margin-bottom:10px; transition: color .4s ease; /* Tambahkan transisi untuk tema */ }
 
     form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
 
     .question { margin-bottom:12px; }
-    input[type="number"]{ width:80px; padding:8px; border-radius:6px; border:1px solid #ddd; }
+    /* input[type="number"] diganti select */
+    select { padding:8px; border-radius:6px; border:1px solid #ddd; appearance:none; background-color:white; cursor:pointer;}
 
     button, .btn {
       background: #9ebdff;
@@ -58,7 +59,7 @@
       font-weight:600;
       position:relative;
       overflow:visible;
-      transition: transform .12s ease, box-shadow .12s ease;
+      transition: transform .12s ease, box-shadow .12s ease, background .4s ease, color .4s ease;
     }
     button:hover, .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(32,48,120,0.12); }
 
@@ -87,6 +88,7 @@
       border-radius: 12px;
       padding: 12px;
       box-shadow: 0 6px 18px rgba(30,40,80,0.05);
+      height: 100%; /* Penting untuk grid item */
     }
 
     /* ==============================
@@ -108,15 +110,37 @@
     .test-panel { display:none; }
     .test-panel.active { display:block; }
 
-    /* ==============================
-       QUOTES SLIDER (pastel background + fade)
-       ============================== */
-    #quotes-section { padding: 30px 20px; border-radius:12px; background: linear-gradient(180deg,#fff8fe,#f7fbff); box-shadow: 0 6px 18px rgba(30,40,80,0.03); }
-    .quotes-wrap { max-width:700px; margin:0 auto; position:relative; min-height:100px; }
-    .quote { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:18px; opacity:0; transform: translateY(8px); transition: all .6s ease; color:#333; font-weight:600; font-size:1.05rem; }
-    .quote.active { opacity:1; transform: translateY(0); z-index:2; }
+    /* Tata letak grid untuk pertanyaan */
+    .questions-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:15px; /* Tambah gap */
+    }
+    /* Style untuk form pertanyaan */
+    .question-item {
+        display:flex;
+        flex-direction:column;
+        gap:6px;
+    }
+    .question-label {
+        display:block;
+        font-weight:600;
+        margin-bottom:4px;
+        color: #555;
+    }
+    .score-control {
+        display:flex;
+        gap:8px;
+        align-items:center;
+    }
 
-    .quotes-controls { margin-top:12px; display:flex; justify-content:center; gap:8px; }
+    /* ==============================
+       QUOTES DISPLAY (non-slider)
+       ============================== */
+    #quotes-section { padding: 30px 20px; border-radius:12px; background: linear-gradient(180deg,#fff8fe,#f7fbff); box-shadow: 0 6px 18px rgba(30,40,80,0.03); transition: background .4s ease; }
+    .quote-display { max-width:700px; margin:0 auto; min-height:100px; text-align:center; padding:10px; }
+    #current-quote { color:#333; font-weight:600; font-size:1.1rem; line-height:1.5; margin-bottom:10px; }
+    #quote-author { color:#7aa3ff; font-style:italic; font-weight:500; font-size:0.95rem; }
 
     /* ==============================
        Clouds animation (soft) - fixed in background
@@ -170,14 +194,52 @@
     }
 
     /* ==============================
-       Theme chooser (Gradient Rainbow pastel)
+       Theme chooser (Dropdown)
        ============================== */
     .theme-chooser { display:flex; gap:8px; align-items:center; justify-content:center; margin:14px 0; }
-    .theme-swatch {
-      width:38px; height:28px; border-radius:8px; cursor:pointer; border:2px solid rgba(0,0,0,0.06);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    .theme-chooser select {
+      padding:8px 12px; border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      min-width: 180px;
     }
-    .sw-rainbow { background: linear-gradient(90deg,#ffd6f0,#dbe9ff,#e8fef8,#fff7d6,#ffdfe8); }
+
+    /* ==============================
+       Theme Specific Styles
+       ============================== */
+    /* DEFAULT THEME (Blue/Pink - CSS/JS will handle) */
+
+    /* Pastel Pink Theme */
+    body[data-theme="pink"]::before { background: linear-gradient(135deg, #fff7fa 0%, #ffe9f4 100%); }
+    header[data-theme="pink"] { background: linear-gradient(90deg, #ffb3d9 0%, #ff80b3 100%); }
+    h2[data-theme="pink"] { color: #ff80b3; }
+    .tab.active[data-theme="pink"] { background: linear-gradient(90deg, #ffb3d9, #ff80b3); }
+
+    /* Pastel Blue Theme */
+    body[data-theme="blue"]::before { background: linear-gradient(135deg, #f7fbff 0%, #e9f4ff 100%); }
+    header[data-theme="blue"] { background: linear-gradient(90deg, #7aa3ff 0%, #4f8aff 100%); }
+    h2[data-theme="blue"] { color: #4f8aff; }
+    .tab.active[data-theme="blue"] { background: linear-gradient(90deg, #7aa3ff, #4f8aff); }
+
+    /* Pastel Purple Theme */
+    body[data-theme="purple"]::before { background: linear-gradient(135deg, #fbf7ff 0%, #f4e9ff 100%); }
+    header[data-theme="purple"] { background: linear-gradient(90deg, #b380ff 0%, #804fff 100%); }
+    h2[data-theme="purple"] { color: #804fff; }
+    .tab.active[data-theme="purple"] { background: linear-gradient(90deg, #b380ff, #804fff); }
+
+    /* Gradient Rainbow Theme */
+    body[data-theme="rainbow"]::before { background: linear-gradient(135deg,#fff6fb 0%,#f0fbff 50%,#fffdf6 100%); }
+    header[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff,#e8fef8,#fff7d6,#ffdfe8); }
+    header[data-theme="rainbow"] h1 { color: #333; }
+    header[data-theme="rainbow"] nav ul li a { color: #333; }
+    h2[data-theme="rainbow"] { color: #3a5fbf; } /* Blue tone for contrast */
+    .tab.active[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff); }
+
+
+    /* Override button styling for themes */
+    button[data-theme="pink"], .btn[data-theme="pink"] { background: #ffb3d9; color: #333; }
+    button[data-theme="blue"], .btn[data-theme="blue"] { background: #7aa3ff; color: white; }
+    button[data-theme="purple"], .btn[data-theme="purple"] { background: #b380ff; color: white; }
+    button[data-theme="rainbow"], .btn[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff); color: #333; }
 
     /* ==============================
        Small responsiveness
@@ -186,20 +248,20 @@
       header h1 { font-size:1.4rem; }
       nav ul { gap:10px; font-size:0.95rem; }
       .cloud.c1, .cloud.c2, .cloud.c3 { display:block; opacity:.6; }
+      .questions-grid { grid-template-columns: 1fr; } /* Satu kolom di layar kecil */
     }
 
   </style>
 </head>
 <body>
 
-  <!-- MOVING CLOUDS -->
   <div class="clouds" aria-hidden="true">
     <div class="cloud c1" style="left:-30%; top:8%;"></div>
     <div class="cloud c2" style="left:-40%; top:38%;"></div>
     <div class="cloud c3" style="left:-50%; top:68%;"></div>
   </div>
 
-  <header>
+  <header id="main-header">
     <div class="sparkle s1" aria-hidden="true"></div>
     <div class="sparkle s2" aria-hidden="true"></div>
     <div class="sparkle s3" aria-hidden="true"></div>
@@ -216,11 +278,8 @@
     </nav>
   </header>
 
-  <!-- =========================
-       MAIN CONTENT (tetap struktur lama)
-       ========================= -->
   <section id="pencegahan">
-    <h2>Cara Pencegahan Gangguan Mental</h2>
+    <h2 id="h2-pencegahan">Cara Pencegahan Gangguan Mental</h2>
     <ul>
       <li>Menjaga keseimbangan antara pekerjaan dan istirahat.</li>
       <li>Berolahraga secara teratur.</li>
@@ -231,7 +290,7 @@
   </section>
 
   <section id="tanda">
-    <h2>Tanda-tanda Gangguan Mental</h2>
+    <h2 id="h2-tanda">Tanda-tanda Gangguan Mental</h2>
     <ul>
       <li>Merasa sedih atau cemas berkepanjangan.</li>
       <li>Kehilangan minat terhadap aktivitas yang disukai.</li>
@@ -242,7 +301,7 @@
   </section>
 
   <section id="mengatasi">
-    <h2>Cara Mengatasi Gangguan Mental</h2>
+    <h2 id="h2-mengatasi">Cara Mengatasi Gangguan Mental</h2>
     <ul>
       <li>Konsultasi dengan psikolog atau psikiater.</li>
       <li>Terapi perilaku kognitif atau konseling.</li>
@@ -252,11 +311,8 @@
     </ul>
   </section>
 
-  <!-- =========================
-       TES MENTAL (baru: banyak tes + tab)
-       ========================= -->
   <section id="angket">
-    <h2>Tes Kesehatan Mental</h2>
+    <h2 id="h2-angket">Tes Kesehatan Mental</h2>
 
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
@@ -267,40 +323,36 @@
           <button class="tab" data-test="keseimbangan">Tes Keseimbangan Hidup</button>
         </div>
 
-        <!-- theme chooser -->
-        <div class="theme-chooser" aria-hidden="false">
-          <div style="font-size:0.9rem; color:#6b6b6b;">Tema</div>
-          <div class="theme-swatch sw-rainbow" id="sw-rainbow" title="Gradient Rainbow pastel" role="button" aria-label="Pilih tema pelangi"></div>
-          <button class="btn" id="resetTheme" title="Kembali tema default" style="background:#fff;color:#333;border:1px solid #eee;">
-            Reset
-            <span class="hover-ico">♡</span>
-          </button>
+        <div class="theme-chooser">
+          <label for="theme-select" style="font-size:0.9rem; color:#6b6b6b;">Tema Warna:</label>
+          <select id="theme-select" aria-label="Pilih tema warna">
+            <option value="default">Default (Blue/Pink)</option>
+            <option value="pink">Pastel Pink</option>
+            <option value="blue">Pastel Blue</option>
+            <option value="purple">Pastel Purple</option>
+            <option value="rainbow">Gradient Rainbow</option>
+          </select>
         </div>
       </div>
 
-      <!-- FORM PANELS -->
       <div id="panels" style="margin-top:14px;">
-        <!-- STRES (15 pertanyaan) -->
         <div class="test-panel active" data-testpanel="stres">
           <form class="test-form" data-questions="15">
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <!-- generate 15 questions simple -->
-              <div class="questions-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px;">
-                <!-- JS akan mengisi, tapi sediakan fallback five sample -->
-              </div>
+            <div style="display:flex;flex-direction:column;gap:15px;">
+              <div class="questions-grid">
+                </div>
               <div style="display:flex;gap:10px; margin-top:8px;">
-                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                <button type="button" class="btn" id="resetStres" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                <button type="submit" class="btn" id="submitStres">Lihat Hasil <span class="hover-ico">✨</span></button>
+                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
               </div>
             </div>
           </form>
         </div>
 
-        <!-- KECEMASAN (10) -->
         <div class="test-panel" data-testpanel="kecemasan">
           <form class="test-form" data-questions="10">
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div class="questions-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px;"></div>
+            <div style="display:flex;flex-direction:column;gap:15px;">
+              <div class="questions-grid"></div>
               <div style="display:flex;gap:10px; margin-top:8px;">
                 <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
                 <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
@@ -309,11 +361,10 @@
           </form>
         </div>
 
-        <!-- KEBAHAGIAAN (8) -->
         <div class="test-panel" data-testpanel="kebahagiaan">
           <form class="test-form" data-questions="8">
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div class="questions-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px;"></div>
+            <div style="display:flex;flex-direction:column;gap:15px;">
+              <div class="questions-grid"></div>
               <div style="display:flex;gap:10px; margin-top:8px;">
                 <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
                 <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
@@ -322,11 +373,10 @@
           </form>
         </div>
 
-        <!-- KESEIMBANGAN (12) -->
         <div class="test-panel" data-testpanel="keseimbangan">
           <form class="test-form" data-questions="12">
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div class="questions-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px;"></div>
+            <div style="display:flex;flex-direction:column;gap:15px;">
+              <div class="questions-grid"></div>
               <div style="display:flex;gap:10px; margin-top:8px;">
                 <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
                 <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
@@ -336,7 +386,6 @@
         </div>
       </div>
 
-      <!-- hasil area (sama untuk semua tes, JS akan menulis) -->
       <div id="hasil-area" style="margin-top:16px; display:none;" class="card">
         <h3 id="hasil-title">Hasil Tes</h3>
         <p id="hasil-emoji" style="font-size:2rem; margin:8px 0;">🙂</p>
@@ -350,22 +399,17 @@
     </div>
   </section>
 
-  <!-- =========================
-       QUOTES MOTIVASI (slider fade)
-       ========================= -->
   <section id="quotes" style="max-width:980px;margin:30px auto;">
-    <h2>Quotes Motivasi</h2>
+    <h2 id="h2-quotes">Quotes Motivasi</h2>
     <div id="quotes-section">
-      <div class="quotes-wrap">
-        <div class="quote active">\"Setiap langkah kecil adalah kemajuan — beri dirimu waktu.\"</div>
-        <div class="quote">\"Kebaikan pada diri sendiri bukanlah egois, itu bertahan hidup.\"</div>
-        <div class="quote">\"Berbicara tentang perasaan adalah keberanian, bukan kelemahan.\"</div>
-        <div class="quote">\"Saat kamu merawat dirimu, kamu memberi izin untuk sembuh.\"</div>
-      </div>
-
-      <div class="quotes-controls">
-        <button class="btn" id="prevQuote">⟨</button>
-        <button class="btn" id="nextQuote">⟩</button>
+      <div class="quote-display">
+        <div style="margin-bottom:15px;">
+            <label for="quote-select" style="font-size:0.9rem; color:#6b6b6b; display:block; margin-bottom:5px;">Pilih Kutipan:</label>
+            <select id="quote-select" style="min-width:250px;">
+                </select>
+        </div>
+        <p id="current-quote">\"Setiap langkah kecil adalah kemajuan — beri dirimu waktu.\"</p>
+        <p id="quote-author">~ Anonim</p>
       </div>
     </div>
   </section>
@@ -374,9 +418,6 @@
     <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️</p>
   </footer>
 
-  <!-- =========================
-       SCRIPT: generate questions, handle tests, results, quotes, theme
-       ========================= -->
   <script>
     /**********************
      * UTIL: questions templates (placeholder texts)
@@ -437,9 +478,30 @@
       ]
     };
 
+    const quoteList = [
+        { text: "Setiap langkah kecil adalah kemajuan — beri dirimu waktu.", author: "Anonim" },
+        { text: "Kebaikan pada diri sendiri bukanlah egois, itu bertahan hidup.", author: "Audre Lorde" },
+        { text: "Berbicara tentang perasaan adalah keberanian, bukan kelemahan.", author: "Brené Brown" },
+        { text: "Saat kamu merawat dirimu, kamu memberi izin untuk sembuh.", author: "Tara Brach" },
+        { text: "Jalani hidup seolah-olah semua pendapatmu adalah yang terpenting.", author: "Ralph Waldo Emerson" },
+        { text: "Jangan biarkan apa yang tidak bisa kamu lakukan mengganggu apa yang bisa kamu lakukan.", author: "John Wooden" },
+        { text: "Satu-satunya cara untuk melakukan pekerjaan hebat adalah mencintai apa yang kamu lakukan.", author: "Steve Jobs" },
+        { text: "Kebahagiaan bukan sesuatu yang sudah jadi. Itu datang dari tindakanmu sendiri.", author: "Dalai Lama" },
+        { text: "Mengubah cara pandangmu terhadap hal-hal, mengubah hal-hal yang kamu pandang.", author: "Wayne Dyer" },
+        { text: "Kamu lebih berani dari yang kamu yakini, lebih kuat dari yang terlihat, dan lebih pintar dari yang kamu kira.", author: "A.A. Milne (Winnie The Pooh)" }
+    ];
+
     /**********************
-     * Render questions into each panel
+     * Render questions into each panel (Modified to use SELECT)
      **********************/
+    const scoreOptions = `
+        <option value="1">1 - Tidak pernah</option>
+        <option value="2">2 - Jarang</option>
+        <option value="3">3 - Kadang-kadang</option>
+        <option value="4">4 - Sering</option>
+        <option value="5">5 - Sangat sering</option>
+    `;
+
     document.querySelectorAll('.test-panel').forEach(panel=>{
       const form = panel.querySelector('.test-form');
       const grid = form.querySelector('.questions-grid');
@@ -447,22 +509,22 @@
       const qArr = sampleQs[qKey] || [];
       const questionsCount = parseInt(form.dataset.questions,10) || qArr.length;
 
-      // ensure we have enough questions (if specified count > available, reuse)
       let finalQs = [];
       for (let i=0;i<questionsCount;i++){
         finalQs.push(qArr[i % qArr.length] || `Pertanyaan ${i+1}`);
       }
 
-      // populate
       grid.innerHTML = '';
       finalQs.forEach((q,i)=>{
         const idx = i+1;
         const item = document.createElement('div');
-        item.className = 'card';
+        item.className = 'card question-item';
         item.innerHTML = `
-          <label style="display:block;font-weight:600;margin-bottom:6px;">${idx}. ${q}</label>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <input type="number" min="1" max="5" required value="1" data-qindex="${i}" />
+          <label class="question-label" for="${qKey}-q${idx}">${idx}. ${q}</label>
+          <div class="score-control">
+            <select id="${qKey}-q${idx}" name="${qKey}-q${idx}" required data-qindex="${i}">
+                ${scoreOptions}
+            </select>
             <small style="color:#666;">(1=Tidak pernah, 5=Sangat sering)</small>
           </div>
         `;
@@ -477,29 +539,38 @@
       t.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
         t.classList.add('active');
-
         const key = t.dataset.test;
         document.querySelectorAll('.test-panel').forEach(p=>{
           p.classList.toggle('active', p.dataset.testpanel === key);
         });
-
-        // hide hasil-area on switching
         document.getElementById('hasil-area').style.display = 'none';
+        // Reset inputs on switch (optional, but good UX)
+        document.querySelectorAll('.test-form select').forEach(s => s.value = 1);
       });
     });
 
     /**********************
      * Scoring & Interpretation (common function)
-     * - Score range: min=questions*1, max=questions*5
-     * - We convert to percent-like health where lower total means healthier (like earlier logic)
      **********************/
     function interpretResult(total, questions, testKey){
       const max = questions*5;
-      // we'll compute 'scorePercent' similar: healthier => higher percent
+      // we'll compute 'scorePercent' similar: healthier => higher percent (lower total for Stres/Cemas is better)
       const healthyPercent = Math.round(((max - total) / max) * 100);
-
       let emoji='🙂', title='OK', interp='';
-      // customize message per test type (testKey)
+
+      if (testKey === 'kebahagiaan') {
+        // For 'kebahagiaan', a higher raw score (total) means better (healthier). We need to invert the formula logic for this test.
+        const happinessScore = total; // 8*1 (8) to 8*5 (40)
+        const min = questions*1;
+        const happyPercent = Math.round(((happinessScore - min) / (max - min)) * 100);
+
+        if (happyPercent >= 80) { emoji='🤩'; title='Sangat Bahagia'; interp='Kamu merasa sangat bahagia. Pertahankan rasa syukur dan kebiasaan positif.'; }
+        else if (happyPercent >= 50) { emoji='😊'; title='Cukup Bahagia'; interp='Kamu cukup bahagia. Coba rutinitas kecil yang membahagiakan untuk meningkatkannya.'; }
+        else { emoji='😕'; title='Kurang Bahagia'; interp='Pertimbangkan aktivitas yang memberi makna dan meningkatkan hubungan sosial.'; }
+        return { emoji, title, interp, healthyPercent: happyPercent }; // Return happyPercent as the score
+      }
+
+      // For Stres, Kecemasan, Keseimbangan: lower total = higher healthyPercent
       if (testKey === 'stres') {
         if (healthyPercent >= 80) { emoji='😌'; title='Stres Rendah'; interp='Kamu tampak punya mekanisme koping yang baik. Pertahankan kebiasaan positif.'; }
         else if (healthyPercent >= 50) { emoji='🙂'; title='Stres Sedang'; interp='Perhatikan tanda-tanda stres — coba teknik relaksasi seperti bernapas atau jalan singkat.'; }
@@ -508,16 +579,12 @@
         if (healthyPercent >= 80) { emoji='😊'; title='Kecemasan Rendah'; interp='Kecemasanmu rendah. Lanjutkan aktivitas yang menenangkan.'; }
         else if (healthyPercent >= 50) { emoji='😐'; title='Kecemasan Sedang'; interp='Coba teknik pernapasan, kurangi kafein, dan istirahat cukup.'; }
         else { emoji='😰'; title='Kecemasan Tinggi'; interp='Pertimbangkan dukungan lebih lanjut — konsultasi profesional dapat membantu.'; }
-      } else if (testKey === 'kebahagiaan') {
-        // higher healthyPercent => happier
-        if (healthyPercent >= 80) { emoji='🤩'; title='Sangat Bahagia'; interp='Kamu merasa bahagia — pertahankan rasa syukur dan kebiasaan positif.'; }
-        else if (healthyPercent >= 50) { emoji='😊'; title='Cukup Bahagia'; interp='Ada area yang bisa ditingkatkan — coba rutinitas kecil yang membahagiakan.'; }
-        else { emoji='😕'; title='Kurang Bahagia'; interp='Pertimbangkan aktivitas yang memberi makna dan hubungan sosial.'; }
       } else if (testKey === 'keseimbangan') {
         if (healthyPercent >= 80) { emoji='🌿'; title='Seimbang'; interp='Kehidupanmu tampak seimbang. Jaga konsistensi dan istirahat.'; }
         else if (healthyPercent >= 50) { emoji='⚖️'; title='Cukup Seimbang'; interp='Perhatikan area yang kurang — coba atur jadwal dan kurangi beban.'; }
         else { emoji='🔄'; title='Kurang Seimbang'; interp='Pertimbangkan langkah sederhana: tidur, olahraga ringan, dan dukungan sosial.'; }
       } else {
+        // Fallback for any other test
         if (healthyPercent >= 80) { emoji='🙂'; title='Baik'; interp='Hasil menunjukkan kondisi yang cukup baik.'; }
         else if (healthyPercent >= 50) { emoji='😐'; title='Perlu Perhatian'; interp='Perlu beberapa perbaikan.'; }
         else { emoji='😟'; title='Perhatian Lebih'; interp='Disarankan untuk mencari dukungan.'; }
@@ -526,22 +593,38 @@
       return { emoji, title, interp, healthyPercent };
     }
 
+
     /**********************
      * Handle form submissions for all tests
      **********************/
     document.querySelectorAll('.test-form').forEach(form=>{
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        const inputs = Array.from(form.querySelectorAll('input[type="number"]'));
-        // ensure values parsed
+        // Use select elements instead of number inputs
+        const inputs = Array.from(form.querySelectorAll('select'));
+
+        // Check for required fields (optional, but good practice)
+        let isValid = true;
+        inputs.forEach(inp => {
+            if (!inp.value || inp.value < 1 || inp.value > 5) {
+                isValid = false;
+                inp.style.border = '2px solid red'; // Highlight invalid input
+            } else {
+                inp.style.border = '1px solid #ddd'; // Reset border
+            }
+        });
+
+        if (!isValid) {
+            alert("Harap isi semua pertanyaan dengan skor 1 sampai 5.");
+            return;
+        }
+
         let total = 0;
         inputs.forEach(inp=>{
           let v = parseInt(inp.value,10);
-          if (isNaN(v) || v<1) v=1;
-          if (v>5) v=5;
           total += v;
         });
-        // identify active test key
+
         const activePanel = form.closest('.test-panel');
         const testKey = activePanel ? activePanel.dataset.testpanel : 'test';
         const questions = inputs.length;
@@ -568,10 +651,14 @@
     /**********************
      * Reset buttons per panel
      **********************/
-    document.querySelectorAll('.btn-reset, #resetStres').forEach(btn=>{
+    document.querySelectorAll('.btn-reset').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const form = btn.closest('.test-panel').querySelector('.test-form');
-        form.querySelectorAll('input[type="number"]').forEach(i=>i.value = 1);
+        // Reset select value to 1
+        form.querySelectorAll('select').forEach(i=>{
+            i.value = 1;
+            i.style.border = '1px solid #ddd'; // Reset border
+        });
         document.getElementById('hasil-area').style.display = 'none';
       });
     });
@@ -606,49 +693,61 @@
     });
 
     /**********************
-     * QUOTES slider behavior (fade)
+     * QUOTES dropdown behavior
      **********************/
-    (function(){
-      const quotes = Array.from(document.querySelectorAll('.quote'));
-      let idx = 0;
-      const show = (i)=>{
-        quotes.forEach((q,j)=> q.classList.toggle('active', i===j));
-      };
-      document.getElementById('nextQuote').addEventListener('click', ()=>{
-        idx = (idx+1) % quotes.length; show(idx);
-      });
-      document.getElementById('prevQuote').addEventListener('click', ()=>{
-        idx = (idx-1 + quotes.length) % quotes.length; show(idx);
-      });
-      // auto rotate every 6s
-      setInterval(()=>{ idx = (idx+1) % quotes.length; show(idx); }, 6000);
-    })();
+    const quoteSelect = document.getElementById('quote-select');
+    const currentQuote = document.getElementById('current-quote');
+    const quoteAuthor = document.getElementById('quote-author');
 
-    /**********************
-     * Theme chooser: apply gradient rainbow pastel
-     **********************/
-    const swRainbow = document.getElementById('sw-rainbow');
-    const resetBtn = document.getElementById('resetTheme');
-
-    swRainbow.addEventListener('click', ()=>{
-      // apply gradient to body background and buttons subtly
-      document.body.style.setProperty('--theme-applied','rainbow');
-      document.body.style.background = 'linear-gradient(135deg,#fff6fb,#f0fbff,#fffdf6)';
-      document.querySelectorAll('header').forEach(h => h.style.background = 'linear-gradient(90deg,#ffd6f0,#dbe9ff,#e8fef8,#fff7d6,#ffdfe8)');
-      // change button hues slightly
-      document.querySelectorAll('button, .btn').forEach(b=>{
-        b.style.background = 'linear-gradient(90deg,#ffd6f0,#dbe9ff)';
-        b.style.color = '#2b2b2b';
-      });
+    quoteList.forEach((q, i) => {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `"${q.text.substring(0, 40)}..." - ${q.author}`;
+        quoteSelect.appendChild(option);
     });
 
-    resetBtn.addEventListener('click', ()=>{
-      // reset to default header gradient
-      document.querySelectorAll('header').forEach(h => h.style.background = 'linear-gradient(90deg, #7aa3ff 0%, #ffb3d9 100%)');
-      document.querySelectorAll('button, .btn').forEach(b=>{
-        b.style.background = ''; b.style.color = '';
-      });
-      document.body.style.background = '';
+    // Set initial quote
+    currentQuote.textContent = `"${quoteList[0].text}"`;
+    quoteAuthor.textContent = `~ ${quoteList[0].author}`;
+
+    quoteSelect.addEventListener('change', function(){
+        const selectedIndex = parseInt(this.value, 10);
+        const q = quoteList[selectedIndex];
+        currentQuote.textContent = `"${q.text}"`;
+        quoteAuthor.textContent = `~ ${q.author}`;
+    });
+
+    /**********************
+     * Theme chooser: apply themes via data-attributes
+     **********************/
+    const themeSelect = document.getElementById('theme-select');
+    const headerElement = document.getElementById('main-header');
+    const h2Elements = document.querySelectorAll('h2');
+    const buttons = document.querySelectorAll('button, .btn');
+    const body = document.body;
+
+    // Apply initial theme (default theme has no data-theme attr)
+    function applyTheme(theme) {
+        // Reset all data-theme attributes
+        body.removeAttribute('data-theme');
+        headerElement.removeAttribute('data-theme');
+        h2Elements.forEach(h => h.removeAttribute('data-theme'));
+        buttons.forEach(b => b.removeAttribute('data-theme'));
+
+        if (theme !== 'default') {
+            body.setAttribute('data-theme', theme);
+            headerElement.setAttribute('data-theme', theme);
+            h2Elements.forEach(h => h.setAttribute('data-theme', theme));
+            buttons.forEach(b => b.setAttribute('data-theme', theme));
+        }
+
+        // Handle specific header text color for rainbow (since it's a light gradient)
+        document.querySelector('header h1').style.color = (theme === 'rainbow') ? '#333' : 'white';
+        document.querySelectorAll('nav ul li a').forEach(a => a.style.color = (theme === 'rainbow') ? '#333' : 'white');
+    }
+
+    themeSelect.addEventListener('change', (e) => {
+        applyTheme(e.target.value);
     });
 
     /**********************
@@ -657,22 +756,14 @@
     document.querySelectorAll('.tab').forEach((t, i, list) => {
       t.setAttribute('tabindex','0');
       t.addEventListener('keydown', (e)=>{
-        if (e.key === 'ArrowRight') list[(i+1)%list.length].focus();
-        if (e.key === 'ArrowLeft') list[(i-1+list.length)%list.length].focus();
+        if (e.key === 'ArrowRight') { list[(i+1)%list.length].focus(); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { list[(i-1+list.length)%list.length].focus(); e.preventDefault(); }
         if (e.key === 'Enter' || e.key === ' ') t.click();
       });
     });
 
-    /**********************
-     * Initialize small defaults: set numeric inputs min1
-     **********************/
-    document.querySelectorAll('input[type="number"]').forEach(i=>{
-      i.addEventListener('input', ()=> {
-        let v = parseInt(i.value,10);
-        if (isNaN(v) || v < 1) i.value = 1;
-        if (v > 5) i.value = 5;
-      });
-    });
+    // Initialize the default theme settings
+    applyTheme('default');
   </script>
 </body>
 </html>

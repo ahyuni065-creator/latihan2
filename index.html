@@ -56,8 +56,21 @@
     form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
 
     .question { margin-bottom:12px; }
-    select { padding:8px; border-radius:6px; border:1px solid #ddd; appearance:none; background-color:white; cursor:pointer;}
-
+    /* INPUT NUMBER STYLE (DIKEMBALIKAN KE BENTUK INI) */
+    input[type="number"] {
+      padding:8px;
+      border-radius:6px;
+      border:1px solid #ddd;
+      width: 60px; /* Ukuran kecil */
+      text-align: center;
+      -moz-appearance: textfield; /* Hide arrows in Firefox */
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none; /* Hide arrows in Chrome/Safari */
+      margin: 0;
+    }
+    
     button, .btn {
       background: #9ebdff;
       color:white;
@@ -88,6 +101,30 @@
         color: inherit; /* Pastikan label mengikuti warna body */
     }
 
+    /* Tata letak grid untuk pertanyaan */
+    .questions-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:15px; /* Tambah gap */
+    }
+    /* Style untuk form pertanyaan */
+    .question-item {
+        display:flex;
+        flex-direction:column;
+        gap:6px;
+    }
+    .question-label {
+        display:block;
+        font-weight:600;
+        margin-bottom:4px;
+        color: inherit;
+    }
+    .score-control {
+        display:flex;
+        gap:8px;
+        align-items:center;
+    }
+
     /* QUOTES DISPLAY */
     #quotes-section { padding: 30px 20px; border-radius:12px; background: linear-gradient(180deg,#fff8fe,#f7fbff); box-shadow: 0 6px 18px rgba(30,40,80,0.03); transition: background .4s ease; }
     #current-quote { color:inherit; font-weight:600; font-size:1.1rem; line-height:1.5; margin-bottom:10px; }
@@ -102,12 +139,17 @@
       font-style:italic; font-weight:500; font-size:0.95rem;
       transition: all .4s ease;
     }
-
-    /* ... (other styles like clouds, sparkles, theme-chooser, media queries remain the same) ... */
-
+    
+    /* Theme chooser: DROPDOWN style */
+    .theme-chooser select, #quote-select {
+      padding:8px 12px; border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      min-width: 180px;
+      appearance: auto; /* Kembalikan default appearance untuk select */
+    }
 
     /* ==============================
-       Theme Specific Styles (Adding Dark Font Colors)
+       Theme Specific Styles (Dark Font Colors)
        ============================== */
     /* Pastel Pink Theme */
     body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
@@ -152,8 +194,7 @@
         color: initial;
     }
 
-
-    /* Override button styling for themes (retained from previous step) */
+    /* Override button styling for themes */
     button[data-theme="pink"], .btn[data-theme="pink"] { background: #ffb3d9; color: #333; }
     button[data-theme="blue"], .btn[data-theme="blue"] { background: #7aa3ff; color: white; }
     button[data-theme="purple"], .btn[data-theme="purple"] { background: #b380ff; color: white; }
@@ -410,16 +451,8 @@
     ];
 
     /**********************
-     * Render questions into each panel (Modified to use SELECT)
+     * Render questions into each panel (Modified to use INPUT TYPE="NUMBER")
      **********************/
-    const scoreOptions = `
-        <option value="1">1 - Tidak pernah</option>
-        <option value="2">2 - Jarang</option>
-        <option value="3">3 - Kadang-kadang</option>
-        <option value="4">4 - Sering</option>
-        <option value="5">5 - Sangat sering</option>
-    `;
-
     document.querySelectorAll('.test-panel').forEach(panel=>{
       const form = panel.querySelector('.test-form');
       const grid = form.querySelector('.questions-grid');
@@ -440,10 +473,8 @@
         item.innerHTML = `
           <label class="question-label" for="${qKey}-q${idx}">${idx}. ${q}</label>
           <div class="score-control">
-            <select id="${qKey}-q${idx}" name="${qKey}-q${idx}" required data-qindex="${i}">
-                ${scoreOptions}
-            </select>
-            <small style="color:inherit;">(1=Tidak pernah, 5=Sangat sering)</small>
+            <input type="number" id="${qKey}-q${idx}" name="${qKey}-q${idx}" required min="1" max="5" value="1" data-qindex="${i}">
+            <small style="color:inherit;">(Skor 1-5)</small>
           </div>
         `;
         grid.appendChild(item);
@@ -463,7 +494,7 @@
         });
         document.getElementById('hasil-area').style.display = 'none';
         // Reset inputs on switch (optional, but good UX)
-        document.querySelectorAll('.test-form select').forEach(s => s.value = 1);
+        document.querySelectorAll('.test-form input[type="number"]').forEach(s => s.value = 1);
       });
     });
 
@@ -518,30 +549,27 @@
     document.querySelectorAll('.test-form').forEach(form=>{
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        // Use select elements instead of number inputs
-        const inputs = Array.from(form.querySelectorAll('select'));
+        // Use number inputs
+        const inputs = Array.from(form.querySelectorAll('input[type="number"]'));
 
-        // Check for required fields (optional, but good practice)
+        // Check for required fields and value range
+        let total = 0;
         let isValid = true;
         inputs.forEach(inp => {
-            if (!inp.value || inp.value < 1 || inp.value > 5) {
+            let v = parseInt(inp.value,10);
+            if (isNaN(v) || v < 1 || v > 5) {
                 isValid = false;
                 inp.style.border = '2px solid red'; // Highlight invalid input
             } else {
                 inp.style.border = '1px solid #ddd'; // Reset border
+                total += v;
             }
         });
 
         if (!isValid) {
-            alert("Harap isi semua pertanyaan dengan skor 1 sampai 5.");
+            alert("Harap isi semua pertanyaan dengan skor antara 1 sampai 5.");
             return;
         }
-
-        let total = 0;
-        inputs.forEach(inp=>{
-          let v = parseInt(inp.value,10);
-          total += v;
-        });
 
         const activePanel = form.closest('.test-panel');
         const testKey = activePanel ? activePanel.dataset.testpanel : 'test';
@@ -572,8 +600,8 @@
     document.querySelectorAll('.btn-reset').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const form = btn.closest('.test-panel').querySelector('.test-form');
-        // Reset select value to 1
-        form.querySelectorAll('select').forEach(i=>{
+        // Reset input value to 1
+        form.querySelectorAll('input[type="number"]').forEach(i=>{
             i.value = 1;
             i.style.border = '1px solid #ddd'; // Reset border
         });

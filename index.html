@@ -125,7 +125,7 @@
         align-items:center;
     }
 
-    /* RUANG CERITA / STORY BOX STYLES (FROM PREVIOUS MOD) */
+    /* RUANG CERITA / STORY BOX STYLES (NEW) */
     #quotes-section { padding: 0; border-radius:12px; background: none; box-shadow: none; }
     
     .story-card {
@@ -144,7 +144,7 @@
       margin-top: 5px;
       font-family: inherit;
       font-size: 1rem;
-      background: white; /* Ensure it works with themes */
+      background: white;
     }
     #story-textarea {
         resize: vertical; 
@@ -157,13 +157,14 @@
         margin-top: 20px;
         padding: 15px;
         border-radius: 8px;
-        border-left: 5px solid #7aa3ff; /* Accent blue */
+        border-left: 5px solid #7aa3ff; /* Accent blue (Default) */
         background: #f0f7ff;
         color: inherit;
         display: none; /* Hidden by default */
         font-weight: 500;
         transition: all 0.3s ease;
     }
+
     /* Styles for list of stories */
     .story-list-item {
         margin-bottom: 15px;
@@ -180,8 +181,9 @@
         margin-bottom: 5px;
         color: inherit;
     }
+    .delete-story-btn { background:#ff9999 !important; color:#333 !important; }
 
-
+    
     /* Theme chooser: DROPDOWN style */
     .theme-chooser {
         display: flex;
@@ -208,7 +210,7 @@
 
 
     /* ==============================
-       Theme Specific Styles (Dark Font Colors)
+       Theme Specific Styles (Dark Font Colors & New Elements)
        ============================== */
     /* Pastel Pink Theme */
     body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
@@ -273,7 +275,6 @@
     button[data-theme="blue"], .btn[data-theme="blue"] { background: #7aa3ff; color: white; }
     button[data-theme="purple"], .btn[data-theme="purple"] { background: #b380ff; color: white; }
     button[data-theme="rainbow"], .btn[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff); color: #333; }
-    .delete-story-btn { background:#ff9999 !important; color:#333 !important; }
 
     /* ==============================
        Small responsiveness
@@ -312,8 +313,7 @@
         <li><a href="#tanda">Tanda-tanda</a></li>
         <li><a href="#mengatasi">Mengatasi</a></li>
         <li><a href="#angket">Tes Mental</a></li>
-        <li><a href="#quotes">Ruang Cerita</a></li>
-        <li class="theme-menu-item">
+        <li><a href="#quotes">Ruang Cerita</a></li> <li class="theme-menu-item">
             <div class="theme-chooser">
                 <label for="theme-select">Tema:</label>
                 <select id="theme-select" aria-label="Pilih tema warna">
@@ -372,14 +372,6 @@
     <div id="test-content-container" class="card" style="display:none;">
       
         <div>
-            <h3 style="margin-bottom: 15px; color:inherit;">Pilih Jenis Tes Kesehatan Mental Anda</h3>
-            
-            <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 25px; line-height: 1.8;">
-                <li style="margin-bottom: 8px;"><b>Tes Stres (15 Pertanyaan):</b> Mengukur tingkat ketegangan, iritasi, dan tekanan yang Anda rasakan sehari-hari.</li>
-                <li style="margin-bottom: 8px;"><b>Tes Kecemasan (10 Pertanyaan):</b> Menilai gejala kegelisahan, kekhawatiran berlebihan, dan respons fisik Anda.</li>
-                <li style="margin-bottom: 8px;"><b>Tes Kebahagiaan (8 Pertanyaan):</b> Mengevaluasi tingkat kepuasan, optimisme, dan rasa syukur Anda terhadap hidup.</li>
-                <li><b>Tes Keseimbangan Hidup (12 Pertanyaan):</b> Menilai keseimbangan waktu antara pekerjaan/aktivitas, istirahat, hobi, dan hubungan sosial.</li>
-            </ul>
             <div class="tests-tabs" role="tablist" aria-label="Pilih tes" style="margin-bottom: 14px;">
                 <button class="tab active" data-test="stres">Tes Stres (15)</button>
                 <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
@@ -557,8 +549,6 @@
       ]
     };
 
-    // QUOTE LIST LAMA DIHAPUS
-
     /**********************
      * Render questions into each panel (Using INPUT TYPE="NUMBER")
      **********************/
@@ -595,7 +585,7 @@
      **********************/
     const toggleBtn = document.getElementById('toggle-test-btn');
     const testContainer = document.getElementById('test-content-container');
-    // const toggleIcon = toggleBtn.querySelector('.toggle-icon'); // Removed since we update the whole button content
+    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
 
     toggleBtn.addEventListener('click', () => {
         const isHidden = testContainer.style.display === 'none';
@@ -769,7 +759,7 @@
     });
 
     /************************************
-     * RUANG CERITA (Story Box) LOGIC (FROM PREVIOUS MOD)
+     * RUANG CERITA (Story Box) LOGIC (NEW)
      ************************************/
 
     // 1. Topic and Sample Responses
@@ -803,7 +793,7 @@
     const responseMessageDiv = document.getElementById('response-message');
     const responseText = document.getElementById('response-text');
     const storiesList = document.getElementById('stories-list');
-    const body = document.body; // already defined globally
+    const body = document.body;
     
     // --- Helper Functions for Local Storage ---
     function getStories() {
@@ -895,7 +885,7 @@
             <h4 style="color:inherit; margin-bottom: 8px;">[${story.response.title}]:</h4>
             <p style="white-space: pre-wrap;">${story.response.text}</p>
             <div style="margin-top:10px;">
-                <button class="btn delete-story-btn" data-index="${index}" style="background:#ff9999; color:#333; padding: 6px 10px; font-size: 0.8rem;">Hapus Cerita</button>
+                <button class="btn delete-story-btn" data-index="${index}" type="button" style="background:#ff9999; color:#333; padding: 6px 10px; font-size: 0.8rem;">Hapus Cerita</button>
             </div>
         `;
 
@@ -941,24 +931,7 @@
         // 1. Get Response
         const responseData = sampleResponses[topic];
         
-        // 2. Display Response
-        const currentTheme = body.getAttribute('data-theme') || 'default';
-        responseMessageDiv.setAttribute('data-theme', currentTheme);
-        responseMessageDiv.style.display = 'block';
-        responseText.innerHTML = `
-            <h4 style="color:inherit; margin-bottom: 8px;">[Cerita Anda (${new Date(story.timestamp).toLocaleDateString()})]:</h4>
-            <p style="white-space: pre-wrap; margin-bottom: 12px; font-style:italic; font-size:0.95rem; color:#555;">${story.content}</p>
-            <h4 style="color:inherit; margin-bottom: 8px;">[${responseData.title}]:</h4>
-            <p>${responseData.text}</p>
-            <div style="margin-top:10px;">
-                <button class="btn" onclick="responseMessageDiv.style.display='none'" style="background:#fff; color:#333; border: 1px solid #ddd; padding: 6px 10px; font-size: 0.8rem;">Tutup Pesan</button>
-            </div>
-        `;
-        
-        // Scroll to response message
-        responseMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // 3. Save to Local Storage
+        // 2. Save to Local Storage
         const stories = getStories();
         const newStory = {
             timestamp: new Date().getTime(), 
@@ -970,6 +943,24 @@
         stories.push(newStory);
         saveStories(stories);
         
+        // 3. Display Response (uses the newly created story object)
+        const currentTheme = body.getAttribute('data-theme') || 'default';
+        responseMessageDiv.setAttribute('data-theme', currentTheme);
+        responseMessageDiv.style.display = 'block';
+
+        responseText.innerHTML = `
+            <h4 style="color:inherit; margin-bottom: 8px;">[Cerita Anda (${new Date(newStory.timestamp).toLocaleDateString()})]:</h4>
+            <p style="white-space: pre-wrap; margin-bottom: 12px; font-style:italic; font-size:0.95rem; color:#555;">${newStory.content}</p>
+            <h4 style="color:inherit; margin-bottom: 8px;">[${responseData.title}]:</h4>
+            <p>${responseData.text}</p>
+            <div style="margin-top:10px;">
+                <button class="btn" type="button" onclick="responseMessageDiv.style.display='none'" style="background:#fff; color:#333; border: 1px solid #ddd; padding: 6px 10px; font-size: 0.8rem;">Tutup Pesan</button>
+            </div>
+        `;
+        
+        // Scroll to response message
+        responseMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
         // 4. Reset Form and Rerender List
         storyTextarea.value = ''; // Clear input
         topicSelect.value = ''; // Reset topic select
@@ -978,13 +969,14 @@
 
     /**********************
      * Theme chooser: apply themes via data-attributes
-     * MODIFIED TO INCLUDE NEW ELEMENTS
      **********************/
     const themeSelect = document.getElementById('theme-select');
     const headerElement = document.getElementById('main-header');
     const h2Elements = document.querySelectorAll('h2');
     const navLinks = document.querySelectorAll('nav ul li a');
     const buttons = document.querySelectorAll('button, .btn');
+    const themeLabel = document.querySelector('header nav .theme-chooser label');
+
 
     // Apply initial theme (default theme has no data-theme attr)
     function applyTheme(theme) {
@@ -994,8 +986,8 @@
         h2Elements.forEach(h => h.removeAttribute('data-theme'));
         buttons.forEach(b => b.removeAttribute('data-theme'));
         navLinks.forEach(a => a.removeAttribute('data-theme'));
-        responseMessageDiv.removeAttribute('data-theme'); // New element
-        document.querySelectorAll('.story-list-item').forEach(si => si.removeAttribute('data-theme')); // New element
+        responseMessageDiv.removeAttribute('data-theme');
+        document.querySelectorAll('.story-list-item').forEach(si => si.removeAttribute('data-theme'));
 
         if (theme !== 'default') {
             body.setAttribute('data-theme', theme);
@@ -1004,11 +996,11 @@
             // Apply theme to buttons (excluding existing button logic to re-select all buttons)
             document.querySelectorAll('button, .btn').forEach(b => b.setAttribute('data-theme', theme));
             navLinks.forEach(a => a.setAttribute('data-theme', theme));
-            responseMessageDiv.setAttribute('data-theme', theme); // New element
-            document.querySelectorAll('.story-list-item').forEach(si => si.setAttribute('data-theme', theme)); // New element
+            responseMessageDiv.setAttribute('data-theme', theme);
+            document.querySelectorAll('.story-list-item').forEach(si => si.setAttribute('data-theme', theme));
         }
-        // Re-render stories to apply theme to newly created list items immediately
-        renderStories();
+        // Call renderStories to re-apply theme to list items
+        renderStories(); 
     }
 
     themeSelect.addEventListener('change', (e) => {
@@ -1036,6 +1028,8 @@
       });
     });
 
+    // Initialize the default theme settings
+    applyTheme('default');
   </script>
 </body>
 </html>

@@ -1,1003 +1,775 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kesehatan Mental</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kesehatan Mental</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-  <style>
-    /* ==============================
-       BASE OVERRIDES: tetap jaga struktur awal
-       ============================== */
-    * { box-sizing: border-box; margin:0; padding:0; font-family: "Poppins", "Segoe UI", Roboto, sans-serif; }
-    /* Warna font default (Blue/Pink Gradient) akan menggunakan Dark Blue/Pink Gradient */
-    body { color: #3a5fbf; line-height:1.6; min-height:100vh; position:relative; overflow-x:hidden; transition: color .4s ease, background-color .3s ease; }
+  <style>
+    /* ==============================
+       BASE OVERRIDES: tetap jaga struktur awal
+       ============================== */
+    * { box-sizing: border-box; margin:0; padding:0; font-family: "Poppins", "Segoe UI", Roboto, sans-serif; }
+    /* Warna font default (Blue/Pink Gradient) akan menggunakan Dark Blue/Pink Gradient */
+    body { color: #3a5fbf; line-height:1.6; min-height:100vh; position:relative; overflow-x:hidden; transition: color .4s ease, background-color .3s ease; }
 
-    body::before{
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -100;
-      background: linear-gradient(135deg, #f7f9ff 0%, #f2f7ff 40%, #fff4fb 100%);
-      transition: background .4s ease;
-    }
+    body::before{
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -100;
+      background: linear-gradient(135deg, #f7f9ff 0%, #f2f7ff 40%, #fff4fb 100%);
+      transition: background .4s ease;
+    }
 
-    /* Header - sekarang bergradien biru->pink (tetap kotak) */
-    header {
-      background: linear-gradient(90deg, #7aa3ff 0%, #ffb3d9 100%);
-      padding: 1rem 0;
-      text-align: center;
-      position: relative;
-      overflow: visible;
-      transition: background .4s ease;
-    }
-    header h1 { margin-bottom: 8px; font-size: 1.8rem; color: #3a5fbf; } /* Dark Blue for Default */
+    /* Header - sekarang bergradien biru->pink (tetap kotak) */
+    header {
+      background: linear-gradient(90deg, #7aa3ff 0%, #ffb3d9 100%);
+      padding: 1rem 0;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+      transition: background .4s ease;
+    }
+    header h1 { margin-bottom: 8px; font-size: 1.8rem; color: #3a5fbf; } /* Dark Blue for Default */
 
-    nav ul { list-style:none; display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:6px; }
-    nav ul li a { text-decoration:none; font-weight:600; padding:6px 8px; display:inline-block; color: #3a5fbf; } /* Dark Blue for Default */
-    nav ul li a:hover { text-decoration:underline; }
+    nav ul { list-style:none; display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:6px; }
+    nav ul li a { text-decoration:none; font-weight:600; padding:6px 8px; display:inline-block; color: #3a5fbf; } /* Dark Blue for Default */
+    nav ul li a:hover { text-decoration:underline; }
 
-    section { padding: 40px 20px; max-width: 900px; margin: 20px auto; background: transparent; }
+    section { padding: 40px 20px; max-width: 900px; margin: 20px auto; background: transparent; }
 
-    /* H2 - Default to Dark Blue/Pink Gradient */
-    h2 {
-      margin-bottom:10px;
-      transition: all .4s ease; /* Tambahkan transisi untuk tema */
-      /* Dark Blue/Pink Gradient for Default H2/Accent */
-      background: linear-gradient(90deg, #3a5fbf 0%, #c4407b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-    }
+    /* H2 - Default to Dark Blue/Pink Gradient */
+    h2 {
+      margin-bottom:10px;
+      transition: all .4s ease; /* Tambahkan transisi untuk tema */
+      /* Dark Blue/Pink Gradient for Default H2/Accent */
+      background: linear-gradient(90deg, #3a5fbf 0%, #c4407b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
 
-    form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
+    form { margin-top:20px; background: white; padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(30,40,80,0.06); }
 
-    .question { margin-bottom:12px; }
-    /* INPUT NUMBER STYLE */
-    input[type="number"] {
-      padding:8px;
-      border-radius:6px;
-      border:1px solid #ddd;
-      width: 60px; /* Ukuran kecil */
-      text-align: center;
-      -moz-appearance: textfield; /* Hide arrows in Firefox */
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none; /* Hide arrows in Chrome/Safari */
-      margin: 0;
-    }
-    
-    button, .btn {
-      background: #9ebdff;
-      color:white;
-      padding:10px 16px;
-      border:none;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:600;
-      position:relative;
-      overflow:visible;
-      transition: transform .12s ease, box-shadow .12s ease, background .4s ease, color .4s ease;
-    }
-    button:hover, .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(32,48,120,0.12); }
+    .question { margin-bottom:12px; }
+    /* INPUT NUMBER STYLE */
+    input[type="number"] {
+      padding:8px;
+      border-radius:6px;
+      border:1px solid #ddd;
+      width: 60px; /* Ukuran kecil */
+      text-align: center;
+      -moz-appearance: textfield; /* Hide arrows in Firefox */
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none; /* Hide arrows in Chrome/Safari */
+      margin: 0;
+    }
+    
+    button, .btn {
+      background: #9ebdff;
+      color:white;
+      padding:10px 16px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      position:relative;
+      overflow:visible;
+      transition: transform .12s ease, box-shadow .12s ease, background .4s ease, color .4s ease;
+    }
+    button:hover, .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(32,48,120,0.12); }
 
-    #hasil { margin-top:18px; background:#eaf2ff; padding:14px; border-radius:10px; }
+    #hasil { margin-top:18px; background:#eaf2ff; padding:14px; border-radius:10px; }
 
-    footer { text-align:center; background:transparent; color:inherit; padding:18px 10px; margin-top:40px; }
+    footer { text-align:center; background:transparent; color:inherit; padding:18px 10px; margin-top:40px; }
 
-    .card {
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      padding: 12px;
-      box-shadow: 0 6px 18px rgba(30,40,80,0.05);
-      height: 100%;
-    }
+    .card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 6px 18px rgba(30,40,80,0.05);
+      height: 100%;
+    }
 
-    .question-label {
-        color: inherit; /* Pastikan label mengikuti warna body */
-    }
+    .question-label {
+        color: inherit; /* Pastikan label mengikuti warna body */
+    }
 
-    /* Tata letak grid untuk pertanyaan */
-    .questions-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:15px; /* Tambah gap */
-    }
-    /* Style untuk form pertanyaan */
-    .question-item {
-        display:flex;
-        flex-direction:column;
-        gap:6px;
-    }
-    .question-label {
-        display:block;
-        font-weight:600;
-        margin-bottom:4px;
-        color: inherit;
-    }
-    .score-control {
-        display:flex;
-        gap:8px;
-        align-items:center;
-    }
+    /* Tata letak grid untuk pertanyaan */
+    .questions-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:15px; /* Tambah gap */
+    }
+    /* Style untuk form pertanyaan */
+    .question-item {
+        display:flex;
+        flex-direction:column;
+        gap:6px;
+    }
+    .question-label {
+        display:block;
+        font-weight:600;
+        margin-bottom:4px;
+        color: inherit;
+    }
+    .score-control {
+        display:flex;
+        gap:8px;
+        align-items:center;
+    }
 
-    /* RUANG CERITA / STORY BOX STYLES (NEW) */
-    #quotes-section { padding: 0; border-radius:12px; background: none; box-shadow: none; }
-    
-    .story-card {
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 6px 18px rgba(30,40,80,0.05);
-      margin-bottom: 25px;
-    }
-    
-    #story-textarea, #topic-select {
-      width: 100%; 
-      padding: 10px; 
-      border-radius: 8px; 
-      border: 1px solid #ddd; 
-      margin-top: 5px;
-      font-family: inherit;
-      font-size: 1rem;
-      background: white;
-    }
-    #story-textarea {
-        resize: vertical; 
-        min-height: 150px;
-        margin-bottom: 10px;
-    }
-    
-    /* Response Message Box */
-    #response-message {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 5px solid #7aa3ff; /* Accent blue (Default) */
-        background: #f0f7ff;
-        color: inherit;
-        display: none; /* Hidden by default */
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
+    /* RUANG CERITA / STORY BOX STYLES (NEW) */
+    #quotes-section { padding: 0; border-radius:12px; background: none; box-shadow: none; }
+    
+    .story-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(30,40,80,0.05);
+      margin-bottom: 25px;
+    }
+    
+    #story-textarea, #topic-select {
+      width: 100%; 
+      padding: 10px; 
+      border-radius: 8px; 
+      border: 1px solid #ddd; 
+      margin-top: 5px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: white;
+    }
+    #story-textarea {
+        resize: vertical; 
+        min-height: 150px;
+        margin-bottom: 10px;
+    }
+    
+    /* Response Message Box */
+    #response-message {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 5px solid #7aa3ff; /* Accent blue (Default) */
+        background: #f0f7ff;
+        color: inherit;
+        display: none; /* Hidden by default */
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
 
-    /* Styles for list of stories */
-    .story-list-item {
-        margin-bottom: 15px;
-        border: 1px solid #eee;
-        padding: 15px;
-        border-radius: 8px;
-        background: white;
-        transition: all 0.2s ease;
-    }
-    .story-list-item:hover {
-        box-shadow: 0 4px 12px rgba(30,40,80,0.08);
-    }
-    .story-list-item h4 {
-        margin-bottom: 5px;
-        color: inherit;
-    }
-    .delete-story-btn { background:#ff9999 !important; color:#333 !important; }
+    /* Styles for list of stories */
+    .story-list-item {
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        background: white;
+        transition: all 0.2s ease;
+    }
+    .story-list-item:hover {
+        box-shadow: 0 4px 12px rgba(30,40,80,0.08);
+    }
+    .story-list-item h4 {
+        margin-bottom: 5px;
+        color: inherit;
+    }
+    .delete-story-btn { background:#ff9999 !important; color:#333 !important; }
 
-    
-    /* Theme chooser: DROPDOWN style */
-    .theme-chooser {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 6px 0; /* Padding agar sejajar dengan link navigasi */
-    }
-    .theme-chooser select, #quote-select {
-      padding:4px 8px; /* Dikecilkan agar pas di nav */
-      border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-      min-width: 130px;
-      appearance: auto;
-      font-size: 0.9rem;
-    }
-    
-    /* Style untuk label tema di header (agar mengikuti warna link) */
-    header nav .theme-chooser label {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #3a5fbf; /* Default Dark Blue */
-        white-space: nowrap;
-    }
+    
+    /* Theme chooser: DROPDOWN style */
+    .theme-chooser {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 0; /* Padding agar sejajar dengan link navigasi */
+    }
+    .theme-chooser select, #quote-select {
+      padding:4px 8px; /* Dikecilkan agar pas di nav */
+      border-radius:8px; border:1px solid #ddd; background-color:white; cursor:pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      min-width: 130px;
+      appearance: auto;
+      font-size: 0.9rem;
+    }
+    
+    /* Style untuk label tema di header (agar mengikuti warna link) */
+    header nav .theme-chooser label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #3a5fbf; /* Default Dark Blue */
+        white-space: nowrap;
+    }
 
 
-    /* ==============================
-       Theme Specific Styles (Dark Font Colors & New Elements)
-       ============================== */
-    /* Pastel Pink Theme */
-    body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
-    header[data-theme="pink"] h1, header[data-theme="pink"] nav ul li a, header[data-theme="pink"] nav .theme-chooser label { color: #7d445c; }
-    h2[data-theme="pink"] {
-        color: #c4407b; /* Darker Pink for headings/accents */
-        background: none;
-        -webkit-text-fill-color: initial;
-        background-clip: initial;
-    }
-    #response-message[data-theme="pink"] { border-left-color: #ffb3d9; background: #fff4fb; }
-    .story-list-item[data-theme="pink"] { border: 1px solid #ffb3d9; }
+    /* ==============================
+       Theme Specific Styles (Dark Font Colors & New Elements)
+       ============================== */
+    /* Pastel Pink Theme */
+    body[data-theme="pink"] { color: #7d445c; } /* Dark Pink for all text */
+    header[data-theme="pink"] h1, header[data-theme="pink"] nav ul li a, header[data-theme="pink"] nav .theme-chooser label { color: #7d445c; }
+    h2[data-theme="pink"] {
+        color: #c4407b; /* Darker Pink for headings/accents */
+        background: none;
+        -webkit-text-fill-color: initial;
+        background-clip: initial;
+    }
+    #response-message[data-theme="pink"] { border-left-color: #ffb3d9; background: #fff4fb; }
+    .story-list-item[data-theme="pink"] { border: 1px solid #ffb3d9; }
 
-    /* Pastel Blue Theme */
-    body[data-theme="blue"] { color: #30538a; } /* Dark Blue for all text */
-    header[data-theme="blue"] h1, header[data-theme="blue"] nav ul li a, header[data-theme="blue"] nav .theme-chooser label { color: #30538a; }
-    h2[data-theme="blue"] {
-        color: #1a407a; /* Darker Blue for headings/accents */
-        background: none;
-        -webkit-text-fill-color: initial;
-        background-clip: initial;
-    }
-    #response-message[data-theme="blue"] { border-left-color: #7aa3ff; background: #f0f7ff; }
-    .story-list-item[data-theme="blue"] { border: 1px solid #7aa3ff; }
+    /* Pastel Blue Theme */
+    body[data-theme="blue"] { color: #30538a; } /* Dark Blue for all text */
+    header[data-theme="blue"] h1, header[data-theme="blue"] nav ul li a, header[data-theme="blue"] nav .theme-chooser label { color: #30538a; }
+    h2[data-theme="blue"] {
+        color: #1a407a; /* Darker Blue for headings/accents */
+        background: none;
+        -webkit-text-fill-color: initial;
+        background-clip: initial;
+    }
+    #response-message[data-theme="blue"] { border-left-color: #7aa3ff; background: #f0f7ff; }
+    .story-list-item[data-theme="blue"] { border: 1px solid #7aa3ff; }
 
-    /* Pastel Purple Theme */
-    body[data-theme="purple"] { color: #53308a; } /* Dark Purple for all text */
-    header[data-theme="purple"] h1, header[data-theme="purple"] nav ul li a, header[data-theme="purple"] nav .theme-chooser label { color: #53308a; }
-    h2[data-theme="purple"] {
-        color: #6035b3; /* Darker Purple for headings/accents */
-        background: none;
-        -webkit-text-fill-color: initial;
-        background-clip: initial;
-    }
-    #response-message[data-theme="purple"] { border-left-color: #b380ff; background: #f8f0ff; }
-    .story-list-item[data-theme="purple"] { border: 1px solid #b380ff; }
+    /* Pastel Purple Theme */
+    body[data-theme="purple"] { color: #53308a; } /* Dark Purple for all text */
+    header[data-theme="purple"] h1, header[data-theme="purple"] nav ul li a, header[data-theme="purple"] nav .theme-chooser label { color: #53308a; }
+    h2[data-theme="purple"] {
+        color: #6035b3; /* Darker Purple for headings/accents */
+        background: none;
+        -webkit-text-fill-color: initial;
+        background-clip: initial;
+    }
+    #response-message[data-theme="purple"] { border-left-color: #b380ff; background: #f8f0ff; }
+    .story-list-item[data-theme="purple"] { border: 1px solid #b380ff; }
 
-    /* Gradient Rainbow Theme */
-    body[data-theme="rainbow"] { color: #333; } /* Base color dark */
-    header[data-theme="rainbow"] h1, header[data-theme="rainbow"] nav ul li a, header[data-theme="rainbow"] nav .theme-chooser label { color: #333; }
-    h2[data-theme="rainbow"] {
-        /* Dark Rainbow Gradient for headings/accents */
-        background: linear-gradient(90deg, #b3579b, #3a5fbf, #53308a);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
-        color: initial;
-    }
-    #response-message[data-theme="rainbow"] { 
-        border-left: 5px solid; 
-        border-image: linear-gradient(180deg, #b3579b, #3a5fbf) 1;
-        background: #f7f7f7;
-    }
-    .story-list-item[data-theme="rainbow"] { 
-        border: 1px solid; 
-        border-image: linear-gradient(90deg, #b3579b, #3a5fbf) 1;
-    }
+    /* Gradient Rainbow Theme */
+    body[data-theme="rainbow"] { color: #333; } /* Base color dark */
+    header[data-theme="rainbow"] h1, header[data-theme="rainbow"] nav ul li a, header[data-theme="rainbow"] nav .theme-chooser label { color: #333; }
+    h2[data-theme="rainbow"] {
+        /* Dark Rainbow Gradient for headings/accents */
+        background: linear-gradient(90deg, #b3579b, #3a5fbf, #53308a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        color: initial;
+    }
+    #response-message[data-theme="rainbow"] { 
+        border-left: 5px solid; 
+        border-image: linear-gradient(180deg, #b3579b, #3a5fbf) 1;
+        background: #f7f7f7;
+    }
+    .story-list-item[data-theme="rainbow"] { 
+        border: 1px solid; 
+        border-image: linear-gradient(90deg, #b3579b, #3a5fbf) 1;
+    }
 
-    /* Override button styling for themes */
-    button[data-theme="pink"], .btn[data-theme="pink"] { background: #ffb3d9; color: #333; }
-    button[data-theme="blue"], .btn[data-theme="blue"] { background: #7aa3ff; color: white; }
-    button[data-theme="purple"], .btn[data-theme="purple"] { background: #b380ff; color: white; }
-    button[data-theme="rainbow"], .btn[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff); color: #333; }
+    /* Override button styling for themes */
+    button[data-theme="pink"], .btn[data-theme="pink"] { background: #ffb3d9; color: #333; }
+    button[data-theme="blue"], .btn[data-theme="blue"] { background: #7aa3ff; color: white; }
+    button[data-theme="purple"], .btn[data-theme="purple"] { background: #b380ff; color: white; }
+    button[data-theme="rainbow"], .btn[data-theme="rainbow"] { background: linear-gradient(90deg,#ffd6f0,#dbe9ff); color: #333; }
 
-    /* ==============================
-       Small responsiveness
-       ============================== */
-    @media (max-width:720px){
-      header h1 { font-size:1.4rem; }
-      nav ul { gap:10px; font-size:0.95rem; }
-      .cloud.c1, .cloud.c2, .cloud.c3 { display:block; opacity:.6; }
-      .questions-grid { grid-template-columns: 1fr; } /* Satu kolom di layar kecil */
-    }
-    @media (max-width: 550px) {
-        nav ul { flex-direction: column; gap: 5px; } /* Susun vertikal jika layar terlalu sempit */
-        .theme-chooser { justify-content: center; }
-    }
+    /* ==============================
+       Small responsiveness
+       ============================== */
+    @media (max-width:720px){
+      header h1 { font-size:1.4rem; }
+      nav ul { gap:10px; font-size:0.95rem; }
+      .cloud.c1, .cloud.c2, .cloud.c3 { display:block; opacity:.6; }
+      .questions-grid { grid-template-columns: 1fr; } /* Satu kolom di layar kecil */
+    }
+    @media (max-width: 550px) {
+        nav ul { flex-direction: column; gap: 5px; } /* Susun vertikal jika layar terlalu sempit */
+        .theme-chooser { justify-content: center; }
+    }
 
-  </style>
+  </style>
 </head>
 <body>
 
-  <div class="clouds" aria-hidden="true">
-    <div class="cloud c1" style="left:-30%; top:8%;"></div>
-    <div class="cloud c2" style="left:-40%; top:38%;"></div>
-    <div class="cloud c3" style="left:-50%; top:68%;"></div>
-  </div>
+  <div class="clouds" aria-hidden="true">
+    <div class="cloud c1" style="left:-30%; top:8%;"></div>
+    <div class="cloud c2" style="left:-40%; top:38%;"></div>
+    <div class="cloud c3" style="left:-50%; top:68%;"></div>
+  </div>
 
-  <header id="main-header">
-    <div class="sparkle s1" aria-hidden="true"></div>
-    <div class="sparkle s2" aria-hidden="true"></div>
-    <div class="sparkle s3" aria-hidden="true"></div>
+  <header id="main-header">
+    <div class="sparkle s1" aria-hidden="true"></div>
+    <div class="sparkle s2" aria-hidden="true"></div>
+    <div class="sparkle s3" aria-hidden="true"></div>
 
-    <h1>Kesehatan Mental</h1>
+    <h1>Kesehatan Mental</h1>
 
-    <nav>
-      <ul>
-        <li><a href="#pencegahan">Pencegahan</a></li>
-        <li><a href="#tanda">Tanda-tanda</a></li>
-        <li><a href="#mengatasi">Mengatasi</a></li>
-        <li><a href="#angket">Tes Mental</a></li>
-        <li><a href="#quotes">Ruang Cerita</a></li> <li class="theme-menu-item">
-            <div class="theme-chooser">
-                <label for="theme-select">Tema:</label>
-                <select id="theme-select" aria-label="Pilih tema warna">
-                    <option value="default">Default (Blue/Pink)</option>
-                    <option value="pink">Pastel Pink</option>
-                    <option value="blue">Pastel Blue</option>
-                    <option value="purple">Pastel Purple</option>
-                    <option value="rainbow">Gradient Rainbow</option>
-                </select>
-            </div>
-        </li>
-      </ul>
-    </nav>
-  </header>
+    <nav>
+      <ul>
+        <li><a href="#pencegahan">Pencegahan</a></li>
+        <li><a href="#tanda">Tanda-tanda</a></li>
+        <li><a href="#mengatasi">Mengatasi</a></li>
+        <li><a href="#angket">Tes Mental</a></li>
+        <li><a href="#quotes">Ruang Cerita</a></li> <li class="theme-menu-item">
+            <div class="theme-chooser">
+                <label for="theme-select">Tema:</label>
+                <select id="theme-select" aria-label="Pilih tema warna">
+                    <option value="default">Default (Blue/Pink)</option>
+                    <option value="pink">Pastel Pink</option>
+                    <option value="blue">Pastel Blue</option>
+                    <option value="purple">Pastel Purple</option>
+                    <option value="rainbow">Gradient Rainbow</option>
+                </select>
+            </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-  <section id="pencegahan">
-    <h2 id="h2-pencegahan">Cara Pencegahan Gangguan Mental</h2>
-    <ul>
-      <li>Menjaga keseimbangan antara pekerjaan dan istirahat.</li>
-      <li>Berolahraga secara teratur.</li>
-      <li>Menjaga pola makan sehat dan tidur cukup.</li>
-      <li>Berbicara dengan orang yang dipercaya saat menghadapi stres.</li>
-      <li>Hindari konsumsi alkohol dan narkoba.</li>
-    </ul>
-  </section>
+  <section id="pencegahan">
+    <h2 id="h2-pencegahan">Cara Pencegahan Gangguan Mental</h2>
+    <ul>
+      <li>Menjaga keseimbangan antara pekerjaan dan istirahat.</li>
+      <li>Berolahraga secara teratur.</li>
+      <li>Menjaga pola makan sehat dan tidur cukup.</li>
+      <li>Berbicara dengan orang yang dipercaya saat menghadapi stres.</li>
+      <li>Hindari konsumsi alkohol dan narkoba.</li>
+    </ul>
+  </section>
 
-  <section id="tanda">
-    <h2 id="h2-tanda">Tanda-tanda Gangguan Mental</h2>
-    <ul>
-      <li>Merasa sedih atau cemas berkepanjangan.</li>
-      <li>Kehilangan minat terhadap aktivitas yang disukai.</li>
-      <li>Perubahan nafsu makan atau pola tidur.</li>
-      <li>Sulit berkonsentrasi.</li>
-      <li>Menarik diri dari lingkungan sosial.</li>
-    </ul>
-  </section>
+  <section id="tanda">
+    <h2 id="h2-tanda">Tanda-tanda Gangguan Mental</h2>
+    <ul>
+      <li>Merasa sedih atau cemas berkepanjangan.</li>
+      <li>Kehilangan minat terhadap aktivitas yang disukai.</li>
+      <li>Perubahan nafsu makan atau pola tidur.</li>
+      <li>Sulit berkonsentrasi.</li>
+      <li>Menarik diri dari lingkungan sosial.</li>
+    </ul>
+  </section>
 
-  <section id="mengatasi">
-    <h2 id="h2-mengatasi">Cara Mengatasi Gangguan Mental</h2>
-    <ul>
-      <li>Konsultasi dengan psikolog atau psikiater.</li>
-      <li>Terapi perilaku kognitif atau konseling.</li>
-      <li>Menulis jurnal atau meditasi.</li>
-      <li>Meningkatkan dukungan sosial.</li>
-      <li>Berpartisipasi dalam kegiatan positif.</li>
-    </ul>
-  </section>
+  <section id="mengatasi">
+    <h2 id="h2-mengatasi">Cara Mengatasi Gangguan Mental</h2>
+    <ul>
+      <li>Konsultasi dengan psikolog atau psikiater.</li>
+      <li>Terapi perilaku kognitif atau konseling.</li>
+      <li>Menulis jurnal atau meditasi.</li>
+      <li>Meningkatkan dukungan sosial.</li>
+      <li>Berpartisipasi dalam kegiatan positif.</li>
+    </ul>
+  </section>
 
-  <section id="angket">
-    <h2 id="h2-angket">Tes Kesehatan Mental</h2>
+  <section id="angket">
+    <h2 id="h2-angket">Tes Kesehatan Mental</h2>
 
-    <button id="toggle-test-btn" class="btn" style="margin-bottom:20px;">
-        Mulai Tes Kesehatan <span class="toggle-icon">▼</span>
-    </button>
+    <button id="toggle-test-btn" class="btn" style="margin-bottom:20px;">
+        Mulai Tes Kesehatan <span class="toggle-icon">▼</span>
+    </button>
 
-    <div id="test-content-container" class="card" style="display:none;">
-      
-        <div>
-            <div class="tests-tabs" role="tablist" aria-label="Pilih tes" style="margin-bottom: 14px;">
-                <button class="tab active" data-test="stres">Tes Stres (15)</button>
-                <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
-                <button class="tab" data-test="kebahagiaan">Tes Kebahagiaan</button>
-                <button class="tab" data-test="keseimbangan">Tes Keseimbangan Hidup</button>
-            </div>
-            
-            <div id="panels" style="margin-top:14px;">
-                <div class="test-panel active" data-testpanel="stres">
-                    <form class="test-form" data-questions="15">
-                        <div style="display:flex;flex-direction:column;gap:15px;">
-                            <div class="questions-grid">
-                                </div>
-                            <div style="display:flex;gap:10px; margin-top:8px;">
-                                <button type="submit" class="btn" id="submitStres">Lihat Hasil <span class="hover-ico">✨</span></button>
-                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <div id="test-content-container" class="card" style="display:none;">
+      
+        <div>
+            <div class="tests-tabs" role="tablist" aria-label="Pilih tes" style="margin-bottom: 14px;">
+                <button class="tab active" data-test="stres">Tes Stres (15)</button>
+                <button class="tab" data-test="kecemasan">Tes Kecemasan</button>
+                <button class="tab" data-test="kebahagiaan">Tes Kebahagiaan</button>
+                <button class="tab" data-test="keseimbangan">Tes Keseimbangan Hidup</button>
+            </div>
+            
+            <div id="panels" style="margin-top:14px;">
+                <div class="test-panel active" data-testpanel="stres">
+                    <form class="test-form" data-questions="15">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid">
+                                </div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn" id="submitStres">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                <div class="test-panel" data-testpanel="kecemasan">
-                    <form class="test-form" data-questions="10">
-                        <div style="display:flex;flex-direction:column;gap:15px;">
-                            <div class="questions-grid"></div>
-                            <div style="display:flex;gap:10px; margin-top:8px;">
-                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <div class="test-panel" data-testpanel="kecemasan">
+                    <form class="test-form" data-questions="10">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                <div class="test-panel" data-testpanel="kebahagiaan">
-                    <form class="test-form" data-questions="8">
-                        <div style="display:flex;flex-direction:column;gap:15px;">
-                            <div class="questions-grid"></div>
-                            <div style="display:flex;gap:10px; margin-top:8px;">
-                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <div class="test-panel" data-testpanel="kebahagiaan">
+                    <form class="test-form" data-questions="8">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                <div class="test-panel" data-testpanel="keseimbangan">
-                    <form class="test-form" data-questions="12">
-                        <div style="display:flex;flex-direction:column;gap:15px;">
-                            <div class="questions-grid"></div>
-                            <div style="display:flex;gap:10px; margin-top:8px;">
-                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
-                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <div class="test-panel" data-testpanel="keseimbangan">
+                    <form class="test-form" data-questions="12">
+                        <div style="display:flex;flex-direction:column;gap:15px;">
+                            <div class="questions-grid"></div>
+                            <div style="display:flex;gap:10px; margin-top:8px;">
+                                <button type="submit" class="btn">Lihat Hasil <span class="hover-ico">✨</span></button>
+                                <button type="button" class="btn btn-reset" style="background:#fff;color:#333;border:1px solid #eee;">Reset <span class="hover-ico">♡</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-            <div id="hasil-area" style="margin-top:16px; display:none;" class="card">
-                <h3 id="hasil-title">Hasil Tes</h3>
-                <p id="hasil-emoji" style="font-size:2rem; margin:8px 0;">🙂</p>
-                <p id="hasil-score" style="font-weight:700;"></p>
-                <p id="hasil-interpretasi"></p>
-                <div style="margin-top:8px; display:flex; gap:8px;">
-                    <button class="btn" id="saveLocal">Simpan Hasil <span class="hover-ico">♡</span></button>
-                    <button class="btn" id="downloadResult" style="background:#fff;color:#333;border:1px solid #eee;">Download <span class="hover-ico">✨</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
+            <div id="hasil-area" style="margin-top:16px; display:none;" class="card">
+                <h3 id="hasil-title">Hasil Tes</h3>
+                <p id="hasil-emoji" style="font-size:2rem; margin:8px 0;">🙂</p>
+                <p id="hasil-score" style="font-weight:700;"></p>
+                <p id="hasil-interpretasi"></p>
+                <div style="margin-top:8px; display:flex; gap:8px;">
+                    <button class="btn" id="saveLocal">Simpan Hasil <span class="hover-ico">♡</span></button>
+                    <button class="btn" id="downloadResult" style="background:#fff;color:#333;border:1px solid #eee;">Download <span class="hover-ico">✨</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
 
-  <section id="quotes" style="max-width:980px;margin:30px auto;">
-    <h2 id="h2-quotes">Ruang Cerita</h2>
-    <div id="quotes-section">
-      
-      <div class="story-card" id="story-input-card">
-          <h3 style="margin-bottom: 15px; color:inherit;">Tulis Cerita atau Curhatmu</h3>
-          <form id="story-form">
-              <div style="margin-bottom: 15px;">
-                  <label for="topic-select" style="font-weight: 600; display: block; margin-bottom: 5px;">Pilih Topik:</label>
-                  <select id="topic-select" aria-label="Pilih Topik Curhat" required>
-                      <option value="">-- Pilih Topik --</option>
-                      <option value="pribadi">Masalah Pribadi/Diri Sendiri</option>
-                      <option value="pekerjaan">Pekerjaan/Pendidikan</option>
-                      <option value="keluarga">Keluarga/Rumah</option>
-                      <option value="hubungan">Hubungan Sosial/Pasangan</option>
-                      <option value="umum">Lain-lain (Umum)</option>
-                  </select>
-              </div>
-              
-              <label for="story-textarea" style="font-weight: 600; display: block;">Cerita Anda:</label>
-              <textarea id="story-textarea" rows="8" placeholder="Bagikan apa yang kamu rasakan di sini..." aria-label="Tulis cerita atau curhat pribadi" required></textarea>
-              
-              <button id="submit-story-btn" class="btn" type="submit">Kirim Cerita <span class="hover-ico">💌</span></button>
-          </form>
+  <section id="quotes" style="max-width:980px;margin:30px auto;">
+    <h2 id="h2-quotes">Ruang Cerita</h2>
+    <div id="quotes-section">
+      
+      <div class="story-card" id="story-input-card">
+          <h3 style="margin-bottom: 15px; color:inherit;">Tulis Cerita atau Curhatmu</h3>
+          <form id="story-form">
+              <div style="margin-bottom: 15px;">
+                  <label for="topic-select" style="font-weight: 600; display: block; margin-bottom: 5px;">Pilih Topik:</label>
+                  <select id="topic-select" aria-label="Pilih Topik Curhat" required>
+                      <option value="">-- Pilih Topik --</option>
+                      <option value="pribadi">Masalah Pribadi/Diri Sendiri</option>
+                      <option value="pekerjaan">Pekerjaan/Pendidikan</option>
+                      <option value="keluarga">Keluarga/Rumah</option>
+                      <option value="hubungan">Hubungan Sosial/Pasangan</option>
+                      <option value="umum">Lain-lain (Umum)</option>
+                  </select>
+              </div>
+              
+              <label for="story-textarea" style="font-weight: 600; display: block;">Cerita Anda:</label>
+              <textarea id="story-textarea" rows="8" placeholder="Bagikan apa yang kamu rasakan di sini..." aria-label="Tulis cerita atau curhat pribadi" required></textarea>
+              
+              <button id="submit-story-btn" class="btn" type="submit">Kirim Cerita <span class="hover-ico">💌</span></button>
+          </form>
 
-          <div id="response-message" class="card">
-              <h4 style="margin-bottom: 5px; color:inherit;">Respon Untukmu:</h4>
-              <p id="response-text"></p>
-          </div>
-      </div>
-      
-      <div id="saved-stories-container">
-          <h3 style="margin-bottom: 15px; color:inherit;">Daftar Cerita Tersimpan</h3>
-          <div id="stories-list">
-              <p class="card" style="padding: 15px; color: #999;">Belum ada cerita yang tersimpan.</p>
-          </div>
-      </div>
+          <div id="response-message" class="card">
+              <h4 style="margin-bottom: 5px; color:inherit;">Respon Untukmu:</h4>
+              <p id="response-text"></p>
+          </div>
+      </div>
+      
+      <div id="saved-stories-container">
+          <h3 style="margin-bottom: 15px; color:inherit;">Daftar Cerita Tersimpan</h3>
+          <div id="stories-list">
+              <p class="card" style="padding: 15px; color: #999;">Belum ada cerita yang tersimpan.</p>
+          </div>
+      </div>
 
-    </div>
-  </section>
+    </div>
+  </section>
 
-  <footer>
-    <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️</p>
-  </footer>
+  <footer>
+    <p>© 2025 Kesehatan Mental | Dibuat dengan ❤️</p>
+  </footer>
 
-  <script>
-    /**********************
-     * UTIL: questions templates (placeholder texts)
-     **********************/
-    const sampleQs = {
-      stres: [
-        "Saya merasa mudah marah atau tersinggung.",
-        "Saya sulit rileks.",
-        "Saya merasa tertekan dengan tuntutan sehari-hari.",
-        "Pikiran saya sering berputar tanpa henti.",
-        "Saya merasa lelah karena beban pikiran.",
-        "Saya mudah terganggu oleh hal kecil.",
-        "Saya merasa tidak sabar.",
-        "Saya khawatir tidak bisa menyelesaikan tugas.",
-        "Saya sering merasa cemas tanpa alasan jelas.",
-        "Tidur saya terganggu karena pikiran.",
-        "Saya merasa tegang otot atau sakit kepala karena stres.",
-        "Saya sulit berkonsentrasi.",
-        "Saya khawatir berlebihan tentang masa depan.",
-        "Saya merasa kewalahan ketika banyak tugas.",
-        "Saya sulit menenangkan diri setelah kejadian menegangkan."
-      ],
-      kecemasan: [
-        "Saya sering merasa cemas tanpa alasan yang jelas.",
-        "Saya khawatir berlebihan terhadap hal kecil.",
-        "Saya merasa gelisah di keramaian.",
-        "Saya sulit tidur karena pikiran cemas.",
-        "Saya khawatir tentang kesehatan saya terus-menerus.",
-        "Saya merasa napas cepat saat cemas.",
-        "Saya menghindari situasi karena takut cemas.",
-        "Saya merasa ada yang tidak terkendali.",
-        "Saya sering memikirkan kemungkinan terburuk.",
-        "Saya sulit menenangkan diri saat khawatir."
-      ],
-      kebahagiaan: [
-        "Saya merasa puas dengan hidup saya saat ini.",
-        "Saya mudah merasakan kebahagiaan dalam hal sederhana.",
-        "Saya merasa memiliki tujuan yang memotivasi.",
-        "Saya merasa dekat dan terhubung dengan orang lain.",
-        "Saya menikmati waktu sendirian tanpa merasa sedih.",
-        "Saya sering tersenyum tanpa alasan khusus.",
-        "Saya bersyukur atas hal-hal kecil setiap hari.",
-        "Saya merasa optimis tentang masa depan."
-      ],
-      keseimbangan: [
-        "Saya merasa pekerjaan dan kehidupan pribadi seimbang.",
-        "Saya cukup tidur dan istirahat.",
-        "Saya punya waktu untuk hobi dan rekreasi.",
-        "Saya menjaga pola makan yang baik.",
-        "Saya meluangkan waktu untuk olahraga.",
-        "Saya merasa hubungan sosial saya sehat.",
-        "Saya memiliki waktu untuk refleksi diri.",
-        "Saya bisa mengelola stres secara rutin.",
-        "Saya merasa punya dukungan saat sulit.",
-        "Saya memberi waktu untuk pengembangan diri.",
-        "Saya merasa bebas dari beban finansial yang berlebihan.",
-        "Saya menikmati kegiatan yang menenangkan."
-      ]
-    };
+  <script>
+    /**********************
+     * UTIL: questions templates (placeholder texts)
+     **********************/
+    const sampleQs = {
+      stres: [
+        "Saya merasa mudah marah atau tersinggung.",
+        "Saya sulit rileks.",
+        "Saya merasa tertekan dengan tuntutan sehari-hari.",
+        "Pikiran saya sering berputar tanpa henti.",
+        "Saya merasa lelah karena beban pikiran.",
+        "Saya mudah terganggu oleh hal kecil.",
+        "Saya merasa tidak sabar.",
+        "Saya khawatir tidak bisa menyelesaikan tugas.",
+        "Saya sering merasa cemas tanpa alasan jelas.",
+        "Tidur saya terganggu karena pikiran.",
+        "Saya merasa tegang otot atau sakit kepala karena stres.",
+        "Saya sulit berkonsentrasi.",
+        "Saya khawatir berlebihan tentang masa depan.",
+        "Saya merasa kewalahan ketika banyak tugas.",
+        "Saya sulit menenangkan diri setelah kejadian menegangkan."
+      ],
+      kecemasan: [
+        "Saya sering merasa cemas tanpa alasan yang jelas.",
+        "Saya khawatir berlebihan terhadap hal kecil.",
+        "Saya merasa gelisah di keramaian.",
+        "Saya sulit tidur karena pikiran cemas.",
+        "Saya khawatir tentang kesehatan saya terus-menerus.",
+        "Saya merasa napas cepat saat cemas.",
+        "Saya menghindari situasi karena takut cemas.",
+        "Saya merasa ada yang tidak terkendali.",
+        "Saya sering memikirkan kemungkinan terburuk.",
+        "Saya sulit menenangkan diri saat khawatir."
+      ],
+      kebahagiaan: [
+        "Saya merasa puas dengan hidup saya saat ini.",
+        "Saya mudah merasakan kebahagiaan dalam hal sederhana.",
+        "Saya merasa memiliki tujuan yang memotivasi.",
+        "Saya merasa dekat dan terhubung dengan orang lain.",
+        "Saya menikmati waktu sendirian tanpa merasa sedih.",
+        "Saya sering tersenyum tanpa alasan khusus.",
+        "Saya bersyukur atas hal-hal kecil setiap hari.",
+        "Saya merasa optimis tentang masa depan."
+      ],
+      keseimbangan: [
+        "Saya merasa pekerjaan dan kehidupan pribadi seimbang.",
+        "Saya cukup tidur dan istirahat.",
+        "Saya punya waktu untuk hobi dan rekreasi.",
+        "Saya menjaga pola makan yang baik.",
+        "Saya meluangkan waktu untuk olahraga.",
+        "Saya merasa hubungan sosial saya sehat.",
+        "Saya memiliki waktu untuk refleksi diri.",
+        "Saya bisa mengelola stres secara rutin.",
+        "Saya merasa punya dukungan saat sulit.",
+        "Saya memberi waktu untuk pengembangan diri.",
+        "Saya merasa bebas dari beban finansial yang berlebihan.",
+        "Saya menikmati kegiatan yang menenangkan."
+      ]
+    };
 
-    /**********************
-     * Render questions into each panel (Using INPUT TYPE="NUMBER")
-     **********************/
-    document.querySelectorAll('.test-panel').forEach(panel=>{
-      const form = panel.querySelector('.test-form');
-      const grid = form.querySelector('.questions-grid');
-      const qKey = panel.dataset.testpanel;
-      const qArr = sampleQs[qKey] || [];
-      const questionsCount = parseInt(form.dataset.questions,10) || qArr.length;
+    /**********************
+     * Render questions into each panel (Using INPUT TYPE="NUMBER")
+     **********************/
+    document.querySelectorAll('.test-panel').forEach(panel=>{
+      const form = panel.querySelector('.test-form');
+      const grid = form.querySelector('.questions-grid');
+      const qKey = panel.dataset.testpanel;
+      const qArr = sampleQs[qKey] || [];
+      const questionsCount = parseInt(form.dataset.questions,10) || qArr.length;
 
-      let finalQs = [];
-      for (let i=0;i<questionsCount;i++){
-        finalQs.push(qArr[i % qArr.length] || `Pertanyaan ${i+1}`);
-      }
+      let finalQs = [];
+      for (let i=0;i<questionsCount;i++){
+        finalQs.push(qArr[i % qArr.length] || `Pertanyaan ${i+1}`);
+      }
 
-      grid.innerHTML = '';
-      finalQs.forEach((q,i)=>{
-        const idx = i+1;
-        const item = document.createElement('div');
-        item.className = 'card question-item';
-        item.innerHTML = `
-          <label class="question-label" for="${qKey}-q${idx}">${idx}. ${q}</label>
-          <div class="score-control">
-            <input type="number" id="${qKey}-q${idx}" name="${qKey}-q${idx}" required min="1" max="5" value="1" data-qindex="${i}">
-            <small style="color:inherit;">(Skor 1-5)</small>
-          </div>
-        `;
-        grid.appendChild(item);
-      });
-    });
+      grid.innerHTML = '';
+      finalQs.forEach((q,i)=>{
+        const idx = i+1;
+        const item = document.createElement('div');
+        item.className = 'card question-item';
+        item.innerHTML = `
+          <label class="question-label" for="${qKey}-q${idx}">${idx}. ${q}</label>
+          <div class="score-control">
+            <input type="number" id="${qKey}-q${idx}" name="${qKey}-q${idx}" required min="1" max="5" value="1" data-qindex="${i}">
+            <small style="color:inherit;">(Skor 1-5)</small>
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+    });
 
-    /**********************
-     * Toggle Test Content Visibility
-     **********************/
-    const toggleBtn = document.getElementById('toggle-test-btn');
-    const testContainer = document.getElementById('test-content-container');
-    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+    /**********************
+     * Toggle Test Content Visibility
+     **********************/
+    const toggleBtn = document.getElementById('toggle-test-btn');
+    const testContainer = document.getElementById('test-content-container');
+    const toggleIcon = toggleBtn.querySelector('.toggle-icon');
 
-    toggleBtn.addEventListener('click', () => {
-        const isHidden = testContainer.style.display === 'none';
-        
-        if (isHidden) {
-            testContainer.style.display = 'block';
-            toggleBtn.innerHTML = 'Sembunyikan Tes Kesehatan <span class="toggle-icon">▲</span>';
-            // Scroll to the top of the test content area for better UX
-            testContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            testContainer.style.display = 'none';
-            toggleBtn.innerHTML = 'Mulai Tes Kesehatan <span class="toggle-icon">▼</span>';
-        }
-    });
+    toggleBtn.addEventListener('click', () => {
+        const isHidden = testContainer.style.display === 'none';
+        
+        if (isHidden) {
+            testContainer.style.display = 'block';
+            toggleBtn.innerHTML = 'Sembunyikan Tes Kesehatan <span class="toggle-icon">▲</span>';
+            // Scroll to the top of the test content area for better UX
+            testContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            testContainer.style.display = 'none';
+            toggleBtn.innerHTML = 'Mulai Tes Kesehatan <span class="toggle-icon">▼</span>';
+        }
+    });
 
-    /**********************
-     * Tabs behavior
-     **********************/
-    document.querySelectorAll('.tab').forEach(t => {
-      t.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-        t.classList.add('active');
-        const key = t.dataset.test;
-        document.querySelectorAll('.test-panel').forEach(p=>{
-          p.classList.toggle('active', p.dataset.testpanel === key);
-        });
-        document.getElementById('hasil-area').style.display = 'none';
-        // Reset inputs on switch (optional, but good UX)
-        document.querySelectorAll('.test-form input[type="number"]').forEach(s => s.value = 1);
-      });
-    });
+    /**********************
+     * Tabs behavior
+     **********************/
+    document.querySelectorAll('.tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const key = t.dataset.test;
+        document.querySelectorAll('.test-panel').forEach(p=>{
+          p.classList.toggle('active', p.dataset.testpanel === key);
+        });
+        document.getElementById('hasil-area').style.display = 'none';
+        // Reset inputs on switch (optional, but good UX)
+        document.querySelectorAll('.test-form input[type="number"]').forEach(s => s.value = 1);
+      });
+    });
 
-    /**********************
-     * Scoring & Interpretation (common function)
-     **********************/
-    function interpretResult(total, questions, testKey){
-      const max = questions*5;
-      // we'll compute 'scorePercent' similar: healthier => higher percent (lower total for Stres/Cemas is better)
-      const healthyPercent = Math.round(((max - total) / max) * 100);
-      let emoji='🙂', title='OK', interp='';
+    /**********************
+     * Scoring & Interpretation (common function)
+     **********************/
+    function interpretResult(total, questions, testKey){
+      const max = questions*5;
+      // we'll compute 'scorePercent' similar: healthier => higher percent (lower total for Stres/Cemas is better)
+      const healthyPercent = Math.round(((max - total) / max) * 100);
+      let emoji='🙂', title='OK', interp='';
 
-      if (testKey === 'kebahagiaan') {
-        // For 'kebahagiaan', a higher raw score (total) means better (healthier). We need to invert the formula logic for this test.
-        const happinessScore = total; // 8*1 (8) to 8*5 (40)
-        const min = questions*1;
-        const happyPercent = Math.round(((happinessScore - min) / (max - min)) * 100);
+      if (testKey === 'kebahagiaan') {
+        // For 'kebahagiaan', a higher raw score (total) means better (healthier). We need to invert the formula logic for this test.
+        const happinessScore = total; // 8*1 (8) to 8*5 (40)
+        const min = questions*1;
+        const happyPercent = Math.round(((happinessScore - min) / (max - min)) * 100);
 
-        if (happyPercent >= 80) { emoji='🤩'; title='Sangat Bahagia'; interp='Kamu merasa sangat bahagia. Pertahankan rasa syukur dan kebiasaan positif.'; }
-        else if (happyPercent >= 50) { emoji='😊'; title='Cukup Bahagia'; interp='Kamu cukup bahagia. Coba rutinitas kecil yang membahagiakan untuk meningkatkannya.'; }
-        else { emoji='😕'; title='Kurang Bahagia'; interp='Pertimbangkan aktivitas yang memberi makna dan meningkatkan hubungan sosial.'; }
-        return { emoji, title, interp, healthyPercent: happyPercent }; // Return happyPercent as the score
-      }
+        if (happyPercent >= 80) { emoji='🤩'; title='Sangat Bahagia'; interp='Kamu merasa sangat bahagia. Pertahankan rasa syukur dan kebiasaan positif.'; }
+        else if (happyPercent >= 50) { emoji='😊'; title='Cukup Bahagia'; interp='Kamu cukup bahagia. Coba rutinitas kecil yang membahagiakan untuk meningkatkannya.'; }
+        else { emoji='😕'; title='Kurang Bahagia'; interp='Pertimbangkan aktivitas yang memberi makna dan meningkatkan hubungan sosial.'; }
+        return { emoji, title, interp, healthyPercent: happyPercent }; // Return happyPercent as the score
+      }
 
-      // For Stres, Kecemasan, Keseimbangan: lower total = higher healthyPercent
-      if (testKey === 'stres') {
-        if (healthyPercent >= 80) { emoji='😌'; title='Stres Rendah'; interp='Kamu tampak punya mekanisme koping yang baik. Pertahankan kebiasaan positif.'; }
-        else if (healthyPercent >= 50) { emoji='🙂'; title='Stres Sedang'; interp='Perhatikan tanda-tanda stres — coba teknik relaksasi seperti bernapas atau jalan singkat.'; }
-        else { emoji='😟'; title='Stres Tinggi'; interp='Kamu mengalami tingkat stres yang cukup tinggi. Pertimbangkan berbicara dengan orang terpercaya atau profesional.'; }
-      } else if (testKey === 'kecemasan') {
-        if (healthyPercent >= 80) { emoji='😊'; title='Kecemasan Rendah'; interp='Kecemasanmu rendah. Lanjutkan aktivitas yang menenangkan.'; }
-        else if (healthyPercent >= 50) { emoji='😐'; title='Kecemasan Sedang'; interp='Coba teknik pernapasan, kurangi kafein, dan istirahat cukup.'; }
-        else { emoji='😰'; title='Kecemasan Tinggi'; interp='Pertimbangkan dukungan lebih lanjut — konsultasi profesional dapat membantu.'; }
-      } else if (testKey === 'keseimbangan') {
-        if (healthyPercent >= 80) { emoji='🌿'; title='Seimbang'; interp='Kehidupanmu tampak seimbang. Jaga konsistensi dan istirahat.'; }
-        else if (healthyPercent >= 50) { emoji='⚖️'; title='Cukup Seimbang'; interp='Perhatikan area yang kurang — coba atur jadwal dan kurangi beban.'; }
-        else { emoji='🔄'; title='Kurang Seimbang'; interp='Pertimbangkan langkah sederhana: tidur, olahraga ringan, dan dukungan sosial.'; }
-      } else {
-        // Fallback for any other test
-        if (healthyPercent >= 80) { emoji='🙂'; title='Baik'; interp='Hasil menunjukkan kondisi yang cukup baik.'; }
-        else if (healthyPercent >= 50) { emoji='😐'; title='Perlu Perhatian'; interp='Perlu beberapa perbaikan.'; }
-        else { emoji='😟'; title='Perhatian Lebih'; interp='Disarankan untuk mencari dukungan.'; }
-      }
+      // For Stres, Kecemasan, Keseimbangan: lower total = higher healthyPercent
+      if (testKey === 'stres') {
+        if (healthyPercent >= 80) { emoji='😌'; title='Stres Rendah'; interp='Kamu tampak punya mekanisme koping yang baik. Pertahankan kebiasaan positif.'; }
+        else if (healthyPercent >= 50) { emoji='🙂'; title='Stres Sedang'; interp='Perhatikan tanda-tanda stres — coba teknik relaksasi seperti bernapas atau jalan singkat.'; }
+        else { emoji='😟'; title='Stres Tinggi'; interp='Kamu mengalami tingkat stres yang cukup tinggi. Pertimbangkan berbicara dengan orang terpercaya atau profesional.'; }
+      } else if (testKey === 'kecemasan') {
+        if (healthyPercent >= 80) { emoji='😊'; title='Kecemasan Rendah'; interp='Kecemasanmu rendah. Lanjutkan aktivitas yang menenangkan.'; }
+        else if (healthyPercent >= 50) { emoji='😐'; title='Kecemasan Sedang'; interp='Coba teknik pernapasan, kurangi kafein, dan istirahat cukup.'; }
+        else { emoji='😰'; title='Kecemasan Tinggi'; interp='Pertimbangkan dukungan lebih lanjut — konsultasi profesional dapat membantu.'; }
+      } else if (testKey === 'keseimbangan') {
+        if (healthyPercent >= 80) { emoji='🌿'; title='Seimbang'; interp='Kehidupanmu tampak seimbang. Jaga konsistensi dan istirahat.'; }
+        else if (healthyPercent >= 50) { emoji='⚖️'; title='Cukup Seimbang'; interp='Perhatikan area yang kurang — coba atur jadwal dan kurangi beban.'; }
+        else { emoji='🔄'; title='Kurang Seimbang'; interp='Pertimbangkan langkah sederhana: tidur, olahraga ringan, dan dukungan sosial.'; }
+      } else {
+        // Fallback for any other test
+        if (healthyPercent >= 80) { emoji='🙂'; title='Baik'; interp='Hasil menunjukkan kondisi yang cukup baik.'; }
+        else if (healthyPercent >= 50) { emoji='😐'; title='Perlu Perhatian'; interp='Perlu beberapa perbaikan.'; }
+        else { emoji='😟'; title='Perhatian Lebih'; interp='Disarankan untuk mencari dukungan.'; }
+      }
 
-      return { emoji, title, interp, healthyPercent };
-    }
-
-
-    /**********************
-     * Handle form submissions for all tests
-     **********************/
-    document.querySelectorAll('.test-form').forEach(form=>{
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        // Use number inputs
-        const inputs = Array.from(form.querySelectorAll('input[type="number"]'));
-
-        // Check for required fields and value range
-        let total = 0;
-        let isValid = true;
-        inputs.forEach(inp => {
-            let v = parseInt(inp.value,10);
-            if (isNaN(v) || v < 1 || v > 5) {
-                isValid = false;
-                inp.style.border = '2px solid red'; // Highlight invalid input
-            } else {
-                inp.style.border = '1px solid #ddd'; // Reset border
-                total += v;
-            }
-        });
-
-        if (!isValid) {
-            alert("Harap isi semua pertanyaan dengan skor antara 1 sampai 5.");
-            return;
-        }
-
-        const activePanel = form.closest('.test-panel');
-        const testKey = activePanel ? activePanel.dataset.testpanel : 'test';
-        const questions = inputs.length;
-
-        const res = interpretResult(total, questions, testKey);
-
-        // show hasil-area
-        document.getElementById('hasil-area').style.display = 'block';
-        document.getElementById('hasil-title').textContent = res.title + ' — ' + testKey.charAt(0).toUpperCase() + testKey.slice(1);
-        document.getElementById('hasil-emoji').textContent = res.emoji;
-        document.getElementById('hasil-score').textContent = `Skor kesehatan (lebih tinggi = lebih baik): ${res.healthyPercent}%`;
-        document.getElementById('hasil-interpretasi').textContent = res.interp;
-
-        // store last result in DOM for save/download
-        document.getElementById('hasil-area').dataset.lastResult = JSON.stringify({
-          testKey, total, questions, ...res, timestamp: new Date().toISOString()
-        });
-
-        // scroll into view
-        document.getElementById('hasil-area').scrollIntoView({behavior:'smooth'});
-      });
-    });
-
-    /**********************
-     * Reset buttons per panel
-     **********************/
-    document.querySelectorAll('.btn-reset').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const form = btn.closest('.test-panel').querySelector('.test-form');
-        // Reset input value to 1
-        form.querySelectorAll('input[type="number"]').forEach(i=>{
-            i.value = 1;
-            i.style.border = '1px solid #ddd'; // Reset border
-        });
-        document.getElementById('hasil-area').style.display = 'none';
-      });
-    });
-
-    /**********************
-     * Save result locally (localStorage)
-     **********************/
-    document.getElementById('saveLocal').addEventListener('click', ()=>{
-      const area = document.getElementById('hasil-area');
-      const last = area.dataset.lastResult;
-      if (!last) { alert('Belum ada hasil untuk disimpan.'); return; }
-      const results = JSON.parse(localStorage.getItem('mh_results') || '[]');
-      results.push(JSON.parse(last));
-      localStorage.setItem('mh_results', JSON.stringify(results));
-      alert('Hasil tersimpan (local).');
-    });
-
-    /**********************
-     * Download result as text
-     **********************/
-    document.getElementById('downloadResult').addEventListener('click', ()=>{
-      const area = document.getElementById('hasil-area');
-      const last = area.dataset.lastResult;
-      if (!last) { alert('Belum ada hasil untuk didownload.'); return; }
-      const data = JSON.parse(last);
-      const content = `Hasil Tes: ${data.testKey}\nWaktu: ${data.timestamp}\nSkor: ${data.healthyPercent}%\nInterpretasi: ${data.interp}\nEmoji: ${data.emoji}\n`;
-      const blob = new Blob([content], {type:'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = `hasil-${data.testKey}.txt`; document.body.appendChild(a);
-      a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-
-    /************************************
-     * RUANG CERITA (Story Box) LOGIC (NEW)
-     ************************************/
-
-    // 1. Topic and Sample Responses
-    const sampleResponses = {
-      pribadi: {
-        title: "Penyemangat Diri Sendiri",
-        text: "Mengenali dan menerima masalah diri sendiri adalah langkah pertama yang paling berani. Ingat, kamu kuat, dan proses penyembuhan butuh waktu. Beri dirimu izin untuk istirahat dan baik pada diri sendiri. Kamu layak mendapatkan kedamaian."
-      },
-      pekerjaan: {
-        title: "Respon untuk Masalah Pekerjaan/Pendidikan",
-        text: "Tekanan pekerjaan atau pendidikan memang berat, tapi kemampuanmu lebih besar dari masalah ini. Coba pecah masalah menjadi langkah-langkah kecil. Cari waktu istirahat sejenak untuk mengisi ulang energi. Batasan yang sehat akan membantumu bertahan."
-      },
-      keluarga: {
-        title: "Respon untuk Masalah Keluarga",
-        text: "Masalah keluarga seringkali paling sulit dihadapi, dan wajar jika kamu merasa terbebani. Ingat, kamu hanya bisa mengontrol dirimu sendiri. Fokus pada hal-hal yang bisa kamu lakukan untuk menjaga kesehatan mentalmu. Kekuatan sejati ada pada ketenangan batinmu."
-      },
-      hubungan: {
-        title: "Respon untuk Masalah Hubungan",
-        text: "Hubungan, baik pertemanan atau percintaan, bisa menjadi sumber kebahagiaan dan juga stres. Berkomunikasi dengan jujur dan menetapkan batasan adalah kunci. Ingat, hubungan yang sehat membuatmu merasa didukung, bukan dikuras energinya. Berani bicara adalah hal yang baik."
-      },
-      umum: {
-        title: "Respon Umum",
-        text: "Terima kasih sudah berbagi. Tidak peduli apa masalahnya, langkahmu untuk menulis dan memproses perasaan ini adalah tindakan positif. Dunia ini lebih baik dengan kehadiranmu. Teruslah bergerak maju, sedikit demi sedikit."
-      }
-    };
-
-    // 2. DOM Elements
-    const storyForm = document.getElementById('story-form');
-    const storyTextarea = document.getElementById('story-textarea');
-    const topicSelect = document.getElementById('topic-select');
-    const responseMessageDiv = document.getElementById('response-message');
-    const responseText = document.getElementById('response-text');
-    const storiesList = document.getElementById('stories-list');
-    const body = document.body;
-    
-    // --- Helper Functions for Local Storage ---
-    function getStories() {
-        try {
-            // Use new key for new format to avoid conflict with potential old keys
-            const stories = localStorage.getItem('user_stories_v2'); 
-            return stories ? JSON.parse(stories) : [];
-        } catch (error) {
-            console.error("Error reading localStorage:", error);
-            return [];
-        }
-    }
-
-    function saveStories(stories) {
-        try {
-            localStorage.setItem('user_stories_v2', JSON.stringify(stories));
-        } catch (error) {
-            console.error("Error writing to localStorage:", error);
-            alert("Gagal menyimpan cerita. Mungkin browser Anda memblokir penyimpanan lokal.");
-        }
-    }
-    
-    // --- Core Logic ---
-
-    // 3. Render Story List
-    function renderStories() {
-        const stories = getStories();
-        const reversedStories = stories.slice().reverse(); // Show newest first
-        storiesList.innerHTML = '';
-        
-        if (stories.length === 0) {
-            storiesList.innerHTML = '<p class="card" style="padding: 15px; color: #999;">Belum ada cerita yang tersimpan.</p>';
-            return;
-        }
-
-        const currentTheme = body.getAttribute('data-theme') || 'default';
-
-        reversedStories.forEach((story, index) => {
-            const item = document.createElement('div');
-            item.classList.add('story-list-item');
-            if (currentTheme !== 'default') {
-                item.setAttribute('data-theme', currentTheme);
-            }
-            
-            // Format date
-            const date = new Date(story.timestamp).toLocaleDateString('id-ID', {
-                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-            });
-            
-            // Limit content preview
-            const preview = story.content.substring(0, 100).replace(/\n/g, ' ') + (story.content.length > 100 ? '...' : '');
-            
-            // Determine displayed topic name
-            const topicName = story.topic.charAt(0).toUpperCase() + story.topic.slice(1);
-            
-            item.innerHTML = `
-                <h4 style="margin-bottom: 5px;">[${topicName}] - ${date}</h4>
-                <p style="font-size:0.9rem; color:inherit; margin-bottom:10px;">${preview}</p>
-                <button class="btn view-story-btn" data-index="${stories.length - 1 - index}" type="button" style="padding: 6px 10px; font-size: 0.9rem;">Lihat Cerita & Respon</button>
-            `;
-            storiesList.appendChild(item);
-        });
-
-        // Attach view event listeners
-        document.querySelectorAll('.view-story-btn').forEach(btn => {
-            btn.addEventListener('click', viewStory);
-        });
-    }
-
-    // 4. View Story (Shows full content and response in the response message box)
-    function viewStory(e) {
-        const index = parseInt(e.target.dataset.index, 10);
-        const stories = getStories();
-        const story = stories[index];
-        
-        if (!story) {
-            alert("Cerita tidak ditemukan.");
-            return;
-        }
-
-        // Apply theme to response box
-        const currentTheme = body.getAttribute('data-theme') || 'default';
-        responseMessageDiv.setAttribute('data-theme', currentTheme);
-        responseMessageDiv.style.display = 'block';
-
-        responseText.innerHTML = `
-            <h4 style="color:inherit; margin-bottom: 8px;">[Cerita Anda (${new Date(story.timestamp).toLocaleDateString()})]:</h4>
-            <p style="white-space: pre-wrap; margin-bottom: 12px; font-style:italic; font-size:0.95rem; color:#555;">${story.content}</p>
-            <h4 style="color:inherit; margin-bottom: 8px;">[${story.response.title}]:</h4>
-            <p style="white-space: pre-wrap;">${story.response.text}</p>
-            <div style="margin-top:10px;">
-                <button class="btn delete-story-btn" data-index="${index}" type="button" style="background:#ff9999; color:#333; padding: 6px 10px; font-size: 0.8rem;">Hapus Cerita</button>
-            </div>
-        `;
-
-        // Attach delete listener for the shown story
-        document.querySelector('.delete-story-btn').addEventListener('click', deleteStory);
-
-        // Scroll to response message
-        responseMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // 5. Delete Story
-    function deleteStory(e) {
-        const indexToDelete = parseInt(e.target.dataset.index, 10);
-        if (!confirm("Anda yakin ingin menghapus cerita ini secara permanen?")) return;
-        
-        let stories = getStories();
-        // Remove the story at the specified index
-        stories.splice(indexToDelete, 1);
-        saveStories(stories);
-        
-        responseMessageDiv.style.display = 'none'; // Hide response after deletion
-        renderStories();
-    }
+      return { emoji, title, interp, healthyPercent };
+    }
 
 
-    // 6. Save/Submit Story
-    storyForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const content = storyTextarea.value.trim();
-        const topic = topicSelect.value;
+    /**********************
+     * Handle form submissions for all tests
+     **********************/
+    document.querySelectorAll('.test-form').forEach(form=>{
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // Use number inputs
+        const inputs = Array.from(form.querySelectorAll('input[type="number"]'));
 
-        if (topic === "") {
-            alert("Harap pilih Topik Curhat.");
-            return;
-        }
+        // Check for required fields and value range
+        let total = 0;
+        let isValid = true;
+        inputs.forEach(inp => {
+            let v = parseInt(inp.value,10);
+            if (isNaN(v) || v < 1 || v > 5) {
+                isValid = false;
+                inp.style.border = '2px solid red'; // Highlight invalid input
+            } else {
+                inp.style.border = '1px solid #ddd'; // Reset border
+                total += v;
+            }
+        });
 
-        if (content.length < 20) {
-            alert("Cerita terlalu pendek. Cerita harus minimal 20 karakter.");
-            return;
-        }
-        
-        // 1. Get Response
-        const responseData = sampleResponses[topic];
-        
-        // 2. Save to Local Storage
-        const stories = getStories();
-        const newStory = {
-            timestamp: new Date().getTime(), 
-            topic: topic,
-            content: content,
-            response: responseData
-        };
-        
-        stories.push(newStory);
-        saveStories(stories);
-        
-        // 3. Display Response (uses the newly created story object)
-        const currentTheme = body.getAttribute('data-theme') || 'default';
-        responseMessageDiv.setAttribute('data-theme', currentTheme);
-        responseMessageDiv.style.display = 'block';
+        if (!isValid) {
+            alert("Harap isi semua pertanyaan dengan skor antara 1 sampai 5.");
+            return;
+        }
 
-        responseText.innerHTML = `
-            <h4 style="color:inherit; margin-bottom: 8px;">[Cerita Anda (${new Date(newStory.timestamp).toLocaleDateString()})]:</h4>
-            <p style="white-space: pre-wrap; margin-bottom: 12px; font-style:italic; font-size:0.95rem; color:#555;">${newStory.content}</p>
-            <h4 style="color:inherit; margin-bottom: 8px;">[${responseData.title}]:</h4>
-            <p>${responseData.text}</p>
-            <div style="margin-top:10px;">
-                <button class="btn" type="button" onclick="responseMessageDiv.style.display='none'" style="background:#fff; color:#333; border: 1px solid #ddd; padding: 6px 10px; font-size: 0.8rem;">Tutup Pesan</button>
-            </div>
-        `;
-        
-        // Scroll to response message
-        responseMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // 4. Reset Form and Rerender List
-        storyTextarea.value = ''; // Clear input
-        topicSelect.value = ''; // Reset topic select
-        renderStories();
-    });
+        const activePanel = form.closest('.test-panel');
+        const testKey = activePanel ? activePanel.dataset.testpanel : 'test';
+        const questions = inputs.length;
 
-    /**********************
-     * Theme chooser: apply themes via data-attributes
-     **********************/
+        const res = interpretResult(total, questions, testKey);
+
+        // show hasil-area
+        document.getElementById('hasil-area').style.display = 'block';
+        document.getElementById('hasil-title').textContent = res.title + ' — ' + testKey.charAt(0).toUpperCase() + testKey.slice(1);
+        document.getElementById('hasil-emoji').textContent = res.emoji;
+        document.getElementById('hasil-score').textContent = `Skor kesehatan (lebih tinggi = lebih baik): ${res.healthyPercent}%`;
+        document.getElementById('hasil-interpretasi').textContent = res.interp;
+
+        // store last result in DOM for save/download
+        document.getElementById('hasil-area').dataset.lastResult = JSON.stringify({
+          testKey, total, questions, ...res, timestamp: new Date().toISOString()
+        });
+
+        // scroll into view
+        document.getElementById('hasil-area').scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    /**********************
+     * Reset buttons per panel
+     **********************/
+    document.querySelectorAll('.btn-reset').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const form = btn.closest('.test-panel').querySelector('.test-form');
+        // Reset input value to 1
+        form.querySelectorAll('input[type="number"]').forEach(i=>{
+            i.value = 1;
+            i.style.border = '1px solid #ddd'; // Reset border
+        });
+        document.getElementById('hasil-area').style.display = 'none';
+      });
+    });
+
+    // ======================================
+    // START NEW / COMPLETED JS FUNCTIONALITY
+    // ======================================
+
+    /**********************
+     * Theme Chooser Logic (LocalStorage)
+     **********************/
+    const THEME_STORAGE_KEY = 'mentalHealthTheme';
     const themeSelect = document.getElementById('theme-select');
     const headerElement = document.getElementById('main-header');
     const h2Elements = document.querySelectorAll('h2');
     const navLinks = document.querySelectorAll('nav ul li a');
-    const buttons = document.querySelectorAll('button, .btn');
-    const themeLabel = document.querySelector('header nav .theme-chooser label');
+    const responseMessageDiv = document.getElementById('response-message');
 
-
-    // Apply initial theme (default theme has no data-theme attr)
     function applyTheme(theme) {
-        // Reset all data-theme attributes
+        const body = document.body;
+        
+        // Clear all existing data-theme attributes
         body.removeAttribute('data-theme');
         headerElement.removeAttribute('data-theme');
         h2Elements.forEach(h => h.removeAttribute('data-theme'));
-        buttons.forEach(b => b.removeAttribute('data-theme'));
+        document.querySelectorAll('button, .btn').forEach(b => b.removeAttribute('data-theme'));
         navLinks.forEach(a => a.removeAttribute('data-theme'));
         responseMessageDiv.removeAttribute('data-theme');
         document.querySelectorAll('.story-list-item').forEach(si => si.removeAttribute('data-theme'));
+
 
         if (theme !== 'default') {
             body.setAttribute('data-theme', theme);
             headerElement.setAttribute('data-theme', theme);
             h2Elements.forEach(h => h.setAttribute('data-theme', theme));
-            // Apply theme to buttons (excluding existing button logic to re-select all buttons)
             document.querySelectorAll('button, .btn').forEach(b => b.setAttribute('data-theme', theme));
             navLinks.forEach(a => a.setAttribute('data-theme', theme));
             responseMessageDiv.setAttribute('data-theme', theme);
             document.querySelectorAll('.story-list-item').forEach(si => si.setAttribute('data-theme', theme));
+        }
+        // Save selection to localStorage
+        try {
+            localStorage.setItem(THEME_STORAGE_KEY, theme);
+        } catch (e) {
+            console.error("Could not save theme:", e);
         }
         // Call renderStories to re-apply theme to list items
         renderStories(); 
@@ -1007,29 +779,240 @@
         applyTheme(e.target.value);
     });
 
-    // Initialize all features on load
+    /**********************
+     * Ruang Cerita (Story Room) Logic (LocalStorage)
+     **********************/
+    const STORY_STORAGE_KEY = 'mentalHealthStories';
+
+    function loadStories() {
+        try {
+            const storiesJson = localStorage.getItem(STORY_STORAGE_KEY);
+            return storiesJson ? JSON.parse(storiesJson) : [];
+        } catch (error) {
+            console.error("Error loading stories:", error);
+            return [];
+        }
+    }
+
+    function saveStories(stories) {
+        try {
+            localStorage.setItem(STORY_STORAGE_KEY, JSON.stringify(stories));
+        } catch (error) {
+            console.error("Error saving stories:", error);
+        }
+    }
+
+    function deleteStory(timestamp) {
+        let stories = loadStories();
+        stories = stories.filter(story => story.timestamp !== timestamp);
+        saveStories(stories);
+        renderStories();
+        
+        // Optional: show quick message
+        const responseDiv = document.getElementById('response-message');
+        const responseText = document.getElementById('response-text');
+        responseText.textContent = 'Cerita telah dihapus.';
+        responseDiv.style.display = 'block';
+        setTimeout(() => responseDiv.style.display = 'none', 3000);
+    }
+
+    function renderStories() {
+        const listContainer = document.getElementById('stories-list');
+        const currentTheme = themeSelect.value;
+        const stories = loadStories();
+        listContainer.innerHTML = '';
+
+        if (stories.length === 0) {
+            listContainer.innerHTML = '<p class="card" style="padding: 15px; color: #999;">Belum ada cerita yang tersimpan.</p>';
+            return;
+        }
+
+        stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Latest first
+
+        stories.forEach(story => {
+            const date = new Date(story.timestamp).toLocaleString('id-ID', {
+                year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            const storyItem = document.createElement('div');
+            storyItem.className = 'story-list-item';
+            storyItem.setAttribute('data-theme', currentTheme === 'default' ? '' : currentTheme);
+            storyItem.setAttribute('data-timestamp', story.timestamp);
+
+            storyItem.innerHTML = `
+                <h4 style="color:inherit;">[Topik: ${story.topic}] - ${date}</h4>
+                <p style="white-space: pre-wrap; margin-bottom: 10px;">"${story.text.length > 200 ? story.text.substring(0, 200) + '...' : story.text}"</p>
+                <button class="btn delete-story-btn" data-timestamp="${story.timestamp}" style="padding: 6px 12px; font-size: 0.9rem;">Hapus</button>
+            `;
+            listContainer.appendChild(storyItem);
+        });
+
+        // Attach delete event listeners
+        listContainer.querySelectorAll('.delete-story-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const timestamp = e.target.dataset.timestamp;
+                if (confirm('Yakin ingin menghapus cerita ini?')) {
+                    deleteStory(timestamp);
+                }
+            });
+        });
+    }
+
+    document.getElementById('story-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const topicSelect = document.getElementById('topic-select');
+        const storyTextarea = document.getElementById('story-textarea');
+        const responseDiv = document.getElementById('response-message');
+        const responseText = document.getElementById('response-text');
+
+        if (!topicSelect.value || !storyTextarea.value.trim()) {
+            alert("Harap pilih topik dan tulis cerita Anda.");
+            return;
+        }
+
+        const newStory = {
+            topic: topicSelect.options[topicSelect.selectedIndex].text,
+            text: storyTextarea.value.trim(),
+            timestamp: new Date().toISOString()
+        };
+
+        let stories = loadStories();
+        stories.push(newStory);
+        saveStories(stories);
+        renderStories();
+
+        // Reset form
+        topicSelect.value = '';
+        storyTextarea.value = '';
+
+        // Simple response
+        const responses = [
+            "Terima kasih sudah berbagi. Ingat, kamu tidak sendirian.",
+            "Kami menghargai keberanianmu untuk bercerita. Semoga harimu membaik!",
+            "Ceritamu aman di sini. Mengeluarkan beban adalah langkah pertama yang kuat.",
+            "Dunia mendengarkan. Ambil napas dalam-dalam, kamu sudah melakukan hal yang hebat."
+        ];
+        responseText.textContent = responses[Math.floor(Math.random() * responses.length)];
+        responseDiv.style.display = 'block';
+        responseDiv.scrollIntoView({ behavior: 'smooth' });
+
+        setTimeout(() => responseDiv.style.display = 'none', 5000);
+    });
+
+    /**********************
+     * Save result locally (localStorage)
+     **********************/
+    const RESULT_STORAGE_KEY = 'mentalHealthResults';
+
+    document.getElementById('saveLocal').addEventListener('click', ()=>{
+        const area = document.getElementById('hasil-area');
+        const last = area.dataset.lastResult;
+        
+        if (!last) { 
+            alert('Belum ada hasil untuk disimpan. Harap selesaikan tes terlebih dahulu.'); 
+            return;
+        }
+
+        try {
+            const newResult = JSON.parse(last);
+            let results = loadTestResults();
+            results.push(newResult);
+            // Only keep the last 20 results to prevent storage bloat
+            if (results.length > 20) results.shift(); 
+            localStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(results));
+
+            // Feedback to user
+            alert(`Hasil Tes ${newResult.testKey.charAt(0).toUpperCase() + newResult.testKey.slice(1)} tersimpan!\nTotal Hasil Tersimpan: ${results.length}`);
+        } catch (e) {
+            console.error("Error saving result:", e);
+            alert("Gagal menyimpan hasil.");
+        }
+    });
+
+    function loadTestResults() {
+        try {
+            const resultsJson = localStorage.getItem(RESULT_STORAGE_KEY);
+            return resultsJson ? JSON.parse(resultsJson) : [];
+        } catch (error) {
+            console.error("Error loading test results:", error);
+            return [];
+        }
+    }
+
+
+    /**********************
+     * Download result
+     **********************/
+    document.getElementById('downloadResult').addEventListener('click', () => {
+        const area = document.getElementById('hasil-area');
+        const last = area.dataset.lastResult;
+
+        if (!last) {
+            alert('Belum ada hasil untuk diunduh. Harap selesaikan tes terlebih dahulu.');
+            return;
+        }
+
+        try {
+            const result = JSON.parse(last);
+            const date = new Date(result.timestamp).toLocaleString('id-ID', {
+                year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+            const testName = result.testKey.charAt(0).toUpperCase() + result.testKey.slice(1);
+
+            const content = `
+Hasil Tes Kesehatan Mental
+--------------------------
+Jenis Tes: ${testName}
+Tanggal: ${date}
+Skor Total (raw): ${result.total} dari ${result.questions * 5}
+Skor Kesehatan (lebih tinggi = lebih baik): ${result.healthyPercent}%
+Tingkat: ${result.title} ${result.emoji}
+Interpretasi: ${result.interp}
+
+Catatan: Ini adalah tes screening sederhana non-medis. Jika Anda merasa khawatir, harap cari bantuan profesional.
+            `.trim();
+
+            // Create Blob and download link
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Hasil_Tes_Mental_${testName}_${new Date().toLocaleDateString('en-CA').replace(/-/g, '')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url); // Clean up
+        } catch (e) {
+            console.error("Error creating download file:", e);
+            alert("Gagal membuat file unduhan.");
+        }
+    });
+
+    /**********************
+     * Initialize on DOM Content Load
+     **********************/
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. Initialize default theme
-        applyTheme(themeSelect.value); 
+        // 1. Initialize theme from localStorage or default
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'default';
+        themeSelect.value = savedTheme; // Set dropdown value
+        applyTheme(savedTheme); // Apply theme styles
+
         // 2. Load and render saved stories (Ruang Cerita)
         renderStories();
     });
 
+    /**********************
+     * Extra: small keyboard accessibility for tabs
+     **********************/
+    document.querySelectorAll('.tab').forEach((t, i, list) => {
+      t.setAttribute('tabindex','0');
+      t.addEventListener('keydown', (e)=>{\r\n        if (e.key === 'ArrowRight') { list[(i+1)%list.length].focus(); e.preventDefault(); }\r\n        if (e.key === 'ArrowLeft') { list[(i-1+list.length)%list.length].focus(); e.preventDefault(); }\r\n        if (e.key === 'Enter' || e.key === ' ') t.click();
+      });
+    });
 
-    /**********************
-     * Extra: small keyboard accessibility for tabs
-     **********************/
-    document.querySelectorAll('.tab').forEach((t, i, list) => {
-      t.setAttribute('tabindex','0');
-      t.addEventListener('keydown', (e)=>{
-        if (e.key === 'ArrowRight') { list[(i+1)%list.length].focus(); e.preventDefault(); }
-        if (e.key === 'ArrowLeft') { list[(i-1+list.length)%list.length].focus(); e.preventDefault(); }
-        if (e.key === 'Enter' || e.key === ' ') t.click();
-      });
-    });
-
-    // Initialize the default theme settings
-    applyTheme('default');
-  </script>
+  </script>
 </body>
 </html>
